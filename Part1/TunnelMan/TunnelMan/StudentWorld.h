@@ -36,7 +36,7 @@ public:
 	}
 
 private:
-	
+	Earth GameBoard[59][59];
 };
 
 #endif // STUDENTWORLD_H_
