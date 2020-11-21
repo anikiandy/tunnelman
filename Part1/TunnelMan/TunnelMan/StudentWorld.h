@@ -3,6 +3,7 @@
 
 #include "GameWorld.h"
 #include "GameConstants.h"
+#include "Actor.h"
 #include <string>
 
 // Students:  Add code to this file, StudentWorld.cpp, Actor.h, and Actor.cpp
@@ -13,10 +14,12 @@ public:
 	StudentWorld(std::string assetDir)
 		: GameWorld(assetDir)
 	{
+	
 	}
 
-	virtual int init()
+	virtual int init()//I guess this is supposed to set up the board?
 	{
+
 		return GWSTATUS_CONTINUE_GAME;
 	}
 
@@ -33,6 +36,7 @@ public:
 	}
 
 private:
+	
 };
 
 #endif // STUDENTWORLD_H_

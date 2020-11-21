@@ -10,6 +10,7 @@
 const int ANIMATION_POSITIONS_PER_TICK = 1;
 const int NUM_LAYERS = 4;
 
+
 inline int roundAwayFromZero(double r)
 {
 	double result =	 r > 0 ? std::floor(r + 0.5) : std::ceil(r - 0.5);
