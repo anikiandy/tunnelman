@@ -4,28 +4,43 @@
 // Students:  Add code to this file (if you wish), Actor.h, StudentWorld.h, and StudentWorld.cpp
 
 //function for thing class
-thing::thing(int imageID, int x, int y, Direction dir,double size ,unsigned int depth) : 
-	GraphObject(imageID, x, y,  dir, size,  depth)
-	{}
+void thing::doSomething()
+{
+	std::cout << "hi";
+}
 
 //thing::~thing(){}
 
 //functions for Earth class
 //constructor
-//Earth::Earth(int x, int y):thing(TID_EARTH,x,y, right, 0.25, 3)
-//{}
 
-//Earth::~Earth()
-//{}
 
- void Earth::doSomething()
-{//do what the earth do
+//functions for tunnelMan class
+void tunnelMan::move(const char &direction)
+{
+	//get current position 
+	int x = this->getX();
+	int y = this->getY();
+	switch (direction)
+	{
+	case 'w':
+		if (y <= 55) this->moveTo(x, y + 4);
+		return;
+	case 's':
+		if (y >= 0) this->moveTo(x, y - 4);
+		return;
+	case 'a':
+		if (x > 0) this->moveTo(x - 4, y);
+		return;
+	case 'd' :
+		if (x < 55) this->moveTo(x + 4, y);
+		return;
+	default:
+		return;
+	}
 
 }
-//functions for tunnelMan class
- //constructor
- //tunnelMan::tunnelMan(int x, int y) :thing(TID_PLAYER, x, y)
- //{}
+
  void tunnelMan::doSomething() {
 	 //do what the man do
 

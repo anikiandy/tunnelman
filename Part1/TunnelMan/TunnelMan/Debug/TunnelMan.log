@@ -1,4 +1,2 @@
 ﻿  Actor.cpp
-Actor.obj : error LNK2019: unresolved external symbol "public: virtual __thiscall thing::~thing(void)" (??1thing@@UAE@XZ) referenced in function "public: virtual void * __thiscall thing::`scalar deleting destructor'(unsigned int)" (??_Gthing@@UAEPAXI@Z)
-Actor.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall thing::doSomething(void)" (?doSomething@thing@@UAEXXZ)
-C:\CS_assignments\tunnelman\Part1\TunnelMan\Debug\TunnelMan.exe : fatal error LNK1120: 2 unresolved externals
+  TunnelMan.vcxproj -> C:\CS_assignments\tunnelman\Part1\TunnelMan\Debug\TunnelMan.exe
