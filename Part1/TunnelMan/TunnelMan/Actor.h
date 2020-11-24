@@ -26,14 +26,22 @@ public:
 	virtual ~Earth() {};
 };
 
-class tunnelMan : thing
+class Tunnelman : thing
 {
 public:
-	tunnelMan() : thing(TID_PLAYER, 30 , 60, right, 1, 0) { setVisible(true); }
-	~tunnelMan();
+	Tunnelman() : thing(TID_PLAYER, 30 , 60, right, 1, 0)
+	{
+		setVisible(true);
+		hp = 10;
+		waters = 5;
+		sonars = 10;
+		nugs = 0;
+	}
+	virtual ~Tunnelman() {}
 	void doSomething();
-	void move(const char &direction);
+	void move(const int &direction);
+	bool amAlive();
 private:
-	
+	int hp, waters, sonars, nugs;
 };
 #endif // ACTOR_H_

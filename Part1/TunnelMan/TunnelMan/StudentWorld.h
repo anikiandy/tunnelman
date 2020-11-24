@@ -11,6 +11,7 @@
 class StudentWorld : public GameWorld
 {
 public:
+	void initEarth(Earth *board[59][59]);
 	StudentWorld(std::string assetDir)
 		: GameWorld(assetDir)
 	{
@@ -19,7 +20,8 @@ public:
 
 	virtual int init()//I guess this is supposed to set up the board?
 	{
-
+		 player = new Tunnelman();
+		 initEarth(GameBoard);
 		return GWSTATUS_CONTINUE_GAME;
 	}
 
@@ -27,7 +29,10 @@ public:
 	{
 		// This code is here merely to allow the game to build, run, and terminate after you hit enter a few times.
 		// Notice that the return value GWSTATUS_PLAYER_DIED will cause our framework to end the current level.
-		decLives();
+		//decLives();
+		int input; 
+		if (getKey(input)) player->move(input);
+		return GWSTATUS_CONTINUE_GAME;
 		return GWSTATUS_PLAYER_DIED;
 	}
 
@@ -36,7 +41,8 @@ public:
 	}
 
 private:
-	//Earth *GameBoard[59][59];
+	Tunnelman* player;
+	Earth *GameBoard[59][59];
 };
 
 #endif // STUDENTWORLD_H_
