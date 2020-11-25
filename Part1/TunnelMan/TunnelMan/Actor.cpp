@@ -36,7 +36,7 @@ void Tunnelman::move(const int direction)
 	{
 	case KEY_PRESS_UP:
 		if (this->getDirection() != up) this->setDirection(up);
-		else if (y < 56) this->moveTo(x, y + 1);
+		else if (y <=60) this->moveTo(x, y + 1);
 		break;
 	case KEY_PRESS_DOWN:
 		if (this->getDirection() != down) this->setDirection(down);
@@ -48,14 +48,23 @@ void Tunnelman::move(const int direction)
 		break;
 	case KEY_PRESS_RIGHT :
 		if (this->getDirection() != right) this->setDirection(right);
-		else if (x < 56) this->moveTo(x + 1, y);
+		else if (x < 57) this->moveTo(x + 1, y);
 		break;
 	default:
 		break;
 	}
 
 }
-
+void Tunnelman::dig() //asks to clear 4x4 earth at tunnel mans position
+{
+	for (int r = 0; r < 4; r++)
+	{
+		for (int c = 0; c < 4; c++)
+		{
+			getWorld()->ClearEarth(getX() + c, getY() + r);
+		}
+	}
+}
 bool Tunnelman::amAlive() {
 	if (hp > 0) return true;
 	else return false;
@@ -65,7 +74,6 @@ bool Tunnelman::amAlive() {
 	 //move or whatever 
 	 if (getWorld()->getKey(input))move(input);
 	 //clear earth
-	 //std::cout << this->getX();
-	 getWorld()->ClearEarth(this->getX(), this->getY());
+	 dig();
 
  }

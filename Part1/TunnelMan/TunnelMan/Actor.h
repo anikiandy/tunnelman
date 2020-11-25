@@ -40,6 +40,7 @@ public:
 	void doSomething();
 	void move(const int direction);
 	bool amAlive();
+	void dig();
 	//void setWorld(StudentWorld* here);
 private:
 	int hp, waters, sonars, nugs;

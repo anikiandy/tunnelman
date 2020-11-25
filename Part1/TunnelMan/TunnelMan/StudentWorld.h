@@ -42,6 +42,7 @@ public:
 	
 private:
 	Tunnelman* player;
+
 	Earth * GameBoard[59][59];
 
 };
