@@ -2,53 +2,47 @@
 #define ACTOR_H_
 
 #include "GraphObject.h"
-//#include "StudentWorld.h"
+#include "GameConstants.h"
+class StudentWorld;
+
 
 // Students:  Add code to this file, Actor.cpp, StudentWorld.h, and StudentWorld.cpp
 class thing : public GraphObject
 {
 public:
-	thing(int imageID, int x, int y, Direction dir, double size, unsigned int depth) :
+	thing(int imageID, StudentWorld *here, int x, int y, Direction dir, double size, unsigned int depth) :
 		GraphObject(imageID, x, y, dir, size, depth)
 	{
-	
+		world = here;
 		setVisible(true);
 	}
 	virtual ~thing() {}
 	virtual void doSomething();
-//	StudentWorld* getWorld() { return world; }
-
+	StudentWorld * getWorld() { return world; };
 private:
-	//StudentWorld* world;
+	StudentWorld* world; 
 
 };
 
 class Earth : public thing
 {
 public:
-	Earth(int x, int y) :thing(TID_EARTH, x, y, right, 0.25, 3)
-		{setVisible(true);}
-	
+	Earth(int x, int y, StudentWorld* here);
 	virtual ~Earth() {};
-	//virtual void GraphObject::setVisible(bool v);
 };
+
 
 class Tunnelman : public thing
 {
 public:
-	Tunnelman() : thing(TID_PLAYER, 30 , 60, right, 1, 0)
-	{
-		setVisible(true);
-		hp = 10;
-		waters = 5;
-		sonars = 10;
-		nugs = 0;
-	}
+	Tunnelman(StudentWorld* here);
 	virtual ~Tunnelman() {}
 	void doSomething();
 	void move(const int direction);
 	bool amAlive();
+	//void setWorld(StudentWorld* here);
 private:
 	int hp, waters, sonars, nugs;
+	
 };
 #endif // ACTOR_H_

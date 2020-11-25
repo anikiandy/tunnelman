@@ -22,7 +22,7 @@ public:
 
 	virtual int init()//I guess this is supposed to set up the board?
 	{
-		 player = new Tunnelman();
+		 player = new Tunnelman(this);
 		 initEarth(GameBoard);
 		return GWSTATUS_CONTINUE_GAME;
 	}
@@ -30,13 +30,7 @@ public:
 	virtual int move()
 	{
 		//decLives();
-		int input; 
-		if (getKey(input))
-		{
-			player->move(input);
-			std::cout << input << std::endl;
-		}
-	
+		player->doSomething();
 		return GWSTATUS_CONTINUE_GAME;
 		return GWSTATUS_PLAYER_DIED;
 	}

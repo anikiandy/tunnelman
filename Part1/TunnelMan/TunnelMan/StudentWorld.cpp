@@ -17,7 +17,7 @@ void StudentWorld::initEarth(Earth *board[59][59])
 	{
 		for (int r = 0; r <= 59; r++)
 		{
-			board[c][r] = new Earth(c,r);
+			board[c][r] = new Earth(c,r,this);
 			//if (r >= 55) board[c][r]->setVisible(false);
 		}
 	}
