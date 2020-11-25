@@ -1,12 +1,12 @@
 #include "Actor.h"
 #include "StudentWorld.h"
-
+#include <iostream>
 // Students:  Add code to this file (if you wish), Actor.h, StudentWorld.h, and StudentWorld.cpp
 
 //function for thing class
 void thing::doSomething()
 {
-	std::cout << "hi";
+
 }
 
 //thing::~thing(){}
@@ -36,19 +36,19 @@ void Tunnelman::move(const int direction)
 	{
 	case KEY_PRESS_UP:
 		if (this->getDirection() != up) this->setDirection(up);
-		else if (y < 56) this->moveTo(x, y + 4);
+		else if (y < 56) this->moveTo(x, y + 1);
 		break;
 	case KEY_PRESS_DOWN:
 		if (this->getDirection() != down) this->setDirection(down);
-		else if (y > 0) this->moveTo(x, y - 4);
+		else if (y > 0) this->moveTo(x, y - 1);
 		break;
 	case KEY_PRESS_LEFT:
 		if (this->getDirection() != left) this->setDirection(left);
-		else if (x > 0) this->moveTo(x - 4, y);
+		else if (x > 0) this->moveTo(x - 1, y);
 		break;
 	case KEY_PRESS_RIGHT :
 		if (this->getDirection() != right) this->setDirection(right);
-		else if (x < 56) this->moveTo(x + 4, y);
+		else if (x < 56) this->moveTo(x + 1, y);
 		break;
 	default:
 		break;
@@ -62,6 +62,10 @@ bool Tunnelman::amAlive() {
 }
  void Tunnelman::doSomething() {
 	 int input;
+	 //move or whatever 
 	 if (getWorld()->getKey(input))move(input);
+	 //clear earth
+	 //std::cout << this->getX();
+	 getWorld()->ClearEarth(this->getX(), this->getY());
 
  }

@@ -22,8 +22,8 @@ public:
 
 	virtual int init()//I guess this is supposed to set up the board?
 	{
-		 player = new Tunnelman(this);
-		 initEarth(GameBoard);
+		 player = new Tunnelman(this);//make player
+		 initEarth(GameBoard); //make Earths
 		return GWSTATUS_CONTINUE_GAME;
 	}
 
@@ -38,7 +38,8 @@ public:
 	virtual void cleanUp()
 	{
 	}
-
+	void ClearEarth(int x, int y);
+	
 private:
 	Tunnelman* player;
 	Earth * GameBoard[59][59];

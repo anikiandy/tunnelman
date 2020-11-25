@@ -23,4 +23,8 @@ void StudentWorld::initEarth(Earth *board[59][59])
 	}
 	
 }
+void StudentWorld::ClearEarth(int x, int y)
+{
+	GameBoard[x][y]->setVisible(false);
+}
 
