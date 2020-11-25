@@ -2,6 +2,7 @@
 #define ACTOR_H_
 
 #include "GraphObject.h"
+//#include "StudentWorld.h"
 
 // Students:  Add code to this file, Actor.cpp, StudentWorld.h, and StudentWorld.cpp
 class thing : public GraphObject
@@ -10,23 +11,29 @@ public:
 	thing(int imageID, int x, int y, Direction dir, double size, unsigned int depth) :
 		GraphObject(imageID, x, y, dir, size, depth)
 	{
+	
 		setVisible(true);
 	}
 	virtual ~thing() {}
 	virtual void doSomething();
+//	StudentWorld* getWorld() { return world; }
+
+private:
+	//StudentWorld* world;
 
 };
 
-class Earth : thing
+class Earth : public thing
 {
 public:
 	Earth(int x, int y) :thing(TID_EARTH, x, y, right, 0.25, 3)
 		{setVisible(true);}
 	
 	virtual ~Earth() {};
+	//virtual void GraphObject::setVisible(bool v);
 };
 
-class Tunnelman : thing
+class Tunnelman : public thing
 {
 public:
 	Tunnelman() : thing(TID_PLAYER, 30 , 60, right, 1, 0)
@@ -39,7 +46,7 @@ public:
 	}
 	virtual ~Tunnelman() {}
 	void doSomething();
-	void move(const int &direction);
+	void move(const int direction);
 	bool amAlive();
 private:
 	int hp, waters, sonars, nugs;

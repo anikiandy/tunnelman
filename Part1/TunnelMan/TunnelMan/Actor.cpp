@@ -16,27 +16,31 @@ void thing::doSomething()
 
 
 //functions for tunnelMan class
-void Tunnelman::move(const int &direction)
+void Tunnelman::move(const int direction)
 {
 	//get current position 
 	int x = this->getX();
 	int y = this->getY();
 	switch (direction)
 	{
-	case 1002:
-		if (y < 55) this->moveTo(x, y + 4);
-		return;
-	case 1003:
-		if (y > 0) this->moveTo(x, y - 4);
-		return;
-	case 1000:
-		if (x > 0) this->moveTo(x - 4, y);
-		return;
-	case 1001 :
-		if (x < 55) this->moveTo(x + 4, y);
-		return;
+	case KEY_PRESS_UP:
+		if (this->getDirection() != up) this->setDirection(up);
+		else if (y < 60) this->moveTo(x, y + 4);
+		break;
+	case KEY_PRESS_DOWN:
+		if (this->getDirection() != down) this->setDirection(down);
+		else if (y > 0) this->moveTo(x, y - 4);
+		break;
+	case KEY_PRESS_LEFT:
+		if (this->getDirection() != left) this->setDirection(left);
+		else if (x > 0) this->moveTo(x - 4, y);
+		break;
+	case KEY_PRESS_RIGHT :
+		if (this->getDirection() != right) this->setDirection(right);
+		else if (x < 60) this->moveTo(x + 4, y);
+		break;
 	default:
-		return;
+		break;
 	}
 
 }
@@ -46,6 +50,6 @@ bool Tunnelman::amAlive() {
 	else return false;
 }
  void Tunnelman::doSomething() {
-	 //do what the man do
+	 
 
  }

@@ -5,6 +5,8 @@
 #include "GameConstants.h"
 #include "Actor.h"
 #include <string>
+#include <memory>
+#include <iostream>
 
 // Students:  Add code to this file, StudentWorld.cpp, Actor.h, and Actor.cpp
 
@@ -27,11 +29,14 @@ public:
 
 	virtual int move()
 	{
-		// This code is here merely to allow the game to build, run, and terminate after you hit enter a few times.
-		// Notice that the return value GWSTATUS_PLAYER_DIED will cause our framework to end the current level.
 		//decLives();
 		int input; 
-		if (getKey(input)) player->move(input);
+		if (getKey(input))
+		{
+			player->move(input);
+			std::cout << input << std::endl;
+		}
+	
 		return GWSTATUS_CONTINUE_GAME;
 		return GWSTATUS_PLAYER_DIED;
 	}
@@ -42,7 +47,8 @@ public:
 
 private:
 	Tunnelman* player;
-	Earth *GameBoard[59][59];
+	Earth * GameBoard[59][59];
+
 };
 
 #endif // STUDENTWORLD_H_
