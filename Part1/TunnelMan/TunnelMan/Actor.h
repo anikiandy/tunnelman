@@ -17,6 +17,7 @@ public:
 		setVisible(true);
 	}
 	virtual ~thing() {}
+	virtual bool amAlive() { return false; }
 	virtual void doSomething();
 	StudentWorld * getWorld() { return world; };
 private:

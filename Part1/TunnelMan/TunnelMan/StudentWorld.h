@@ -22,28 +22,38 @@ public:
 	}
 
 	virtual int init();
-
-
 	virtual int move()
 	{
+		int pieceCount = 0;
 		//decLives();
-		for (thing *i : pieces)
+		for (std::unique_ptr<thing> &i : gamePieces)
 		{
+			if (i == nullptr)
+			{
+				break;
+			}
 			i->doSomething();
+			if (!i->amAlive())
+			{
+				gamePieces.erase(gamePieces.begin() + pieceCount);
+				
+			}
+			else pieceCount++;
 		}
 		return GWSTATUS_CONTINUE_GAME;
 		return GWSTATUS_PLAYER_DIED;
 	}
 
 	virtual void cleanUp();
-
 	bool ClearEarth(int x, int y);
+
 	
 private:
 	Tunnelman* player;
 	int B = 3; //number of boulders
 	Earth * GameBoard[BOARDSIZE][BOARDSIZE];
-	std::vector<thing*> pieces; 
+
+	std::vector<std::unique_ptr<thing>> gamePieces;
 };
 
 #endif // STUDENTWORLD_H_
