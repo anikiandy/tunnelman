@@ -21,17 +21,16 @@ public:
 	
 	}
 
-	virtual int init()
-	{
-		 player = new Tunnelman(this);//make player
-		 initEarth(GameBoard); //make Earths
-		return GWSTATUS_CONTINUE_GAME;
-	}
+	virtual int init();
+
 
 	virtual int move()
 	{
 		//decLives();
-		player->doSomething();
+		for (thing *i : pieces)
+		{
+			i->doSomething();
+		}
 		return GWSTATUS_CONTINUE_GAME;
 		return GWSTATUS_PLAYER_DIED;
 	}
@@ -42,9 +41,9 @@ public:
 	
 private:
 	Tunnelman* player;
-
+	int B = 3; //number of boulders
 	Earth * GameBoard[BOARDSIZE][BOARDSIZE];
-
+	std::vector<thing*> pieces; 
 };
 
 #endif // STUDENTWORLD_H_

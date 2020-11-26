@@ -46,4 +46,23 @@ private:
 	int hp, waters, sonars, nugs;
 	
 };
+
+class Boulder : public thing
+{
+public:
+	Boulder(int x, int y, StudentWorld* here);
+	void doSomething();
+	virtual ~Boulder() {}
+
+private:
+	StudentWorld* world;
+	int state; //use for boulder state stable:0, Waiting:1, falling: 2
+	int ticker; //used to delay fall
+	
+};
+
+
+
+
+
 #endif // ACTOR_H_

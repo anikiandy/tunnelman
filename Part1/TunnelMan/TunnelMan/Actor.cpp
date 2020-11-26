@@ -76,6 +76,28 @@ bool Tunnelman::amAlive() {
 	 int input;
 	 //move or whatever 
 	 if (getWorld()->getKey(input))move(input);
-
-
  }
+
+Boulder::Boulder(int x, int y, StudentWorld* here) : thing(TID_BOULDER, here, x, y, down, 1, 1)
+ {
+	setVisible(true);
+	world = here;
+	state = 1; 
+	ticker = 30;
+ }
+	
+void Boulder::doSomething()
+{
+	switch (state)
+	{
+	case 0:
+		//check 
+		break;
+	case 1:
+
+		break;
+	case 2:
+
+		break;
+	}
+}
