@@ -24,10 +24,18 @@ void StudentWorld::initEarth(Earth *board[BOARDSIZE][BOARDSIZE])
 	}
 		
 }
-void StudentWorld::ClearEarth(int x, int y)
+bool StudentWorld::ClearEarth(int x, int y)
 {
+	bool dug = false;
 	//std::cout << "clearing :" << x << "  " << y << endl;
-	if (x<=59 && x>=0 && y >=0 && y <=59)
-		GameBoard[x][y]->setVisible(false);
+	if (x <= 59 && x >= 0 && y >= 0 && y <= 59)
+	{
+		if (GameBoard[x][y]->isVisible())
+		{
+			GameBoard[x][y]->setVisible(false);
+			dug = true;
+		}
+	}
+	return dug;
 }
 

@@ -38,7 +38,7 @@ public:
 	virtual void cleanUp()
 	{
 	}
-	void ClearEarth(int x, int y);
+	bool ClearEarth(int x, int y);
 	
 private:
 	Tunnelman* player;
