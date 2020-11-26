@@ -22,7 +22,14 @@ void StudentWorld::initEarth(Earth *board[BOARDSIZE][BOARDSIZE])
 			//if (r == 59) board[r][c]->setVisible(false);
 		}
 	}
-		
+	//cut shaft
+	for (int c = 4; c < 60; c++)
+	{
+		for (int r = 30; r < 34; r++)
+		{
+			board[r][c]->setVisible(false);
+		}
+	}
 }
 bool StudentWorld::ClearEarth(int x, int y)
 {
@@ -39,3 +46,26 @@ bool StudentWorld::ClearEarth(int x, int y)
 	return dug;
 }
 
+StudentWorld::~StudentWorld()
+{
+	player->~Tunnelman();
+	for (int c = 0; c < BOARDSIZE; c++)
+	{
+		for (int r = 0; r < BOARDSIZE; r++)
+		{
+			GameBoard[r][c]->~Earth();
+		}
+	}
+}
+
+void StudentWorld::cleanUp()
+{
+	player->~Tunnelman();
+	for (int c = 0; c < BOARDSIZE; c++)
+	{
+		for (int r = 0; r < BOARDSIZE; r++)
+		{
+			GameBoard[r][c]->~Earth();
+		}
+	}
+}

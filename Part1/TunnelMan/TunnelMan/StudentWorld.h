@@ -14,6 +14,7 @@ class StudentWorld : public GameWorld
 {
 public:
 	void initEarth(Earth *board[BOARDSIZE][BOARDSIZE]);
+	~StudentWorld();
 	StudentWorld(std::string assetDir)
 		: GameWorld(assetDir)
 	{
@@ -35,9 +36,8 @@ public:
 		return GWSTATUS_PLAYER_DIED;
 	}
 
-	virtual void cleanUp()
-	{
-	}
+	virtual void cleanUp();
+
 	bool ClearEarth(int x, int y);
 	
 private:
