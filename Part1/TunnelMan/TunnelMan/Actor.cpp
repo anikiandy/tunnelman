@@ -36,7 +36,7 @@ void Tunnelman::move(const int direction)
 	{
 	case KEY_PRESS_UP:
 		if (this->getDirection() != up) this->setDirection(up);
-		else if (y <=60) this->moveTo(x, y + 1);
+		else if (y <60) this->moveTo(x, y + 1);
 		break;
 	case KEY_PRESS_DOWN:
 		if (this->getDirection() != down) this->setDirection(down);

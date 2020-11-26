@@ -20,7 +20,7 @@ public:
 	
 	}
 
-	virtual int init()//I guess this is supposed to set up the board?
+	virtual int init()
 	{
 		 player = new Tunnelman(this);//make player
 		 initEarth(GameBoard); //make Earths
