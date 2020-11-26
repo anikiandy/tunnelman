@@ -4,7 +4,7 @@
 #include "GraphObject.h"
 #include "GameConstants.h"
 class StudentWorld;
-
+int const BOARDSIZE = 60;
 
 // Students:  Add code to this file, Actor.cpp, StudentWorld.h, and StudentWorld.cpp
 class thing : public GraphObject

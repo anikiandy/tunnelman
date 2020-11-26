@@ -12,17 +12,18 @@ GameWorld* createStudentWorld(string assetDir)
 
 
 // Students:  Add code to this file (if you wish), StudentWorld.h, Actor.h and Actor.cpp
-void StudentWorld::initEarth(Earth *board[59][59])
+void StudentWorld::initEarth(Earth *board[BOARDSIZE][BOARDSIZE])
 {
-	for (int c = 0; c < 60; c++)
+	for (int c = 0; c < BOARDSIZE; c++)
 	{
-		for (int r = 0; r < 60; r++)
+		for (int r = 0; r < BOARDSIZE; r++)
 		{
-			board[r][c] = new Earth(r+1,c+1,this);
+			board[r][c] = new Earth(r,c,this);
+			int Y = board[r][c]->getY();
 			//if (r == 59) board[r][c]->setVisible(false);
 		}
 	}
-	board[3][1]->setVisible(false);
+		
 }
 void StudentWorld::ClearEarth(int x, int y)
 {

@@ -6,14 +6,14 @@
 #include "Actor.h"
 #include <string>
 #include <memory>
-#include <iostream>
+#include <vector>
 
 // Students:  Add code to this file, StudentWorld.cpp, Actor.h, and Actor.cpp
 
 class StudentWorld : public GameWorld
 {
 public:
-	void initEarth(Earth *board[59][59]);
+	void initEarth(Earth *board[BOARDSIZE][BOARDSIZE]);
 	StudentWorld(std::string assetDir)
 		: GameWorld(assetDir)
 	{
@@ -43,7 +43,7 @@ public:
 private:
 	Tunnelman* player;
 
-	Earth * GameBoard[59][59];
+	Earth * GameBoard[BOARDSIZE][BOARDSIZE];
 
 };
 
