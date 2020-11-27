@@ -26,7 +26,7 @@ public:
 	{
 		int pieceCount = 0;
 		//decLives();
-		for (std::unique_ptr<thing> &i : gamePieces)
+		/*for (std::unique_ptr<thing> &i : gamePieces)
 		{
 			if (i == nullptr)
 			{
@@ -35,10 +35,16 @@ public:
 			i->doSomething();
 			if (!i->amAlive())
 			{
-				gamePieces.erase(gamePieces.begin() + pieceCount);
+				 gamePieces.erase(gamePieces.begin() + pieceCount);
 				
 			}
 			else pieceCount++;
+		}*/
+		std::vector<std::shared_ptr<thing>>::iterator it = parts.begin();
+		while (it != parts.end())
+		{
+			(*it)->doSomething();
+			it++;
 		}
 		return GWSTATUS_CONTINUE_GAME;
 		return GWSTATUS_PLAYER_DIED;
@@ -52,7 +58,7 @@ private:
 	Tunnelman* player;
 	int B = 3; //number of boulders
 	Earth * GameBoard[BOARDSIZE][BOARDSIZE];
-
+	std::vector<std::shared_ptr<thing>> parts;
 	std::vector<std::unique_ptr<thing>> gamePieces;
 };
 
