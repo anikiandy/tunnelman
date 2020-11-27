@@ -66,6 +66,12 @@ void StudentWorld::removeDead(std::vector<shared_ptr<thing>> &parts)
 
 }
 
+bool StudentWorld::isEarth(int x, int y)
+{
+	if (GameBoard[x][y]->isVisible())return true;
+	else return false;
+}
+
 StudentWorld::~StudentWorld()
 {
 	parts.clear();

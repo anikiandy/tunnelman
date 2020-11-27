@@ -40,6 +40,7 @@ public:
 	}
 
 	void removeDead(std::vector<std::shared_ptr<thing>> &parts);
+	bool isEarth(int x, int y);
 
 	virtual void cleanUp();
 	bool ClearEarth(int x, int y);

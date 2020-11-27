@@ -83,22 +83,41 @@ Boulder::Boulder(int x, int y, StudentWorld* here) : thing(TID_BOULDER, here, x,
  {
 	setVisible(true);
 	world = here;
-	state = 1; 
-	ticker = 30;
+	state = 0; 
+	ticker = 0;
  }
 	
 void Boulder::doSomething()
 {
+	//get current position
+	int x = getX();
+	int y = getY();
+	bool supported = false;
 	switch (state)
 	{
-	case 0:
-		//check 
+	case 0://static state check 4 squares under for earth
+		for (int i = 0; i < 4; i++)
+		{
+			if (getWorld()->isEarth(x + i, y - 1)) supported = true;
+		}
+		if (supported == false) state = 1;
 		break;
 	case 1:
-
+		if (ticker == 30) {
+			state = 2;
+			getWorld()->playSound(SOUND_FALLING_ROCK);
+		}
+		else ticker++;
 		break;
 	case 2:
-
+		//check for earth before moving 
+		for (int i = 0; i < 4; i++)
+		{
+			if (getWorld()->isEarth(x + 1, y - 1)) state = 0;
+			ticker = 0;
+			break;
+		}
+		moveTo(x, y - 1);
 		break;
 	}
 }
