@@ -48,6 +48,7 @@ private:
 	
 };
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~BOULDER STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Boulder : public thing
 {
 public:

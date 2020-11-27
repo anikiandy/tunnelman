@@ -13,11 +13,7 @@ int StudentWorld::init()
 {
 	initEarth(GameBoard); //make Earths
 	parts.emplace_back(std::shared_ptr<thing>(new Tunnelman(this)));
-	//vector<shared_ptr<thing>>::iterator i = parts.begin();
-	//(*i)->doSomething();
-	//gamePieces.emplace_back(std::unique_ptr<thing>(new Tunnelman(this)));//add tunnel man to gamepieces vector
 	
-
 	for (int i = 0; i < B; i++)//adding boulders to pieces vector (need to finalize)
 	{
 		parts.emplace_back(std::shared_ptr<thing>(new Boulder(rand() % 59, rand() % 59, this)));
@@ -58,9 +54,21 @@ bool StudentWorld::ClearEarth(int x, int y)
 	return dug;
 }
 
+void StudentWorld::removeDead(std::vector<shared_ptr<thing>> &parts)
+{
+	std::vector<shared_ptr<thing>>::iterator it = parts.begin();
+	while (it != parts.end())
+	{
+		if (!(*it)->amAlive())
+			it = parts.erase(it);
+		else it++;
+	}
+
+}
+
 StudentWorld::~StudentWorld()
 {
-	//player->~Tunnelman();
+	parts.clear();
 	for (int c = 0; c < BOARDSIZE; c++)
 	{
 		for (int r = 0; r < BOARDSIZE; r++)
@@ -72,6 +80,7 @@ StudentWorld::~StudentWorld()
 
 void StudentWorld::cleanUp()
 {	
+	parts.clear();
 	for (int c = 0; c < BOARDSIZE; c++)
 	{
 		for (int r = 0; r < BOARDSIZE; r++)
