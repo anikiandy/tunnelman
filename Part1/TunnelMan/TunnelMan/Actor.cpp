@@ -92,6 +92,7 @@ void Boulder::doSomething()
 	//get current position
 	int x = getX();
 	int y = getY();
+	if (y == 0) return;
 	bool supported = false;
 	switch (state)
 	{
@@ -113,9 +114,12 @@ void Boulder::doSomething()
 		//check for earth before moving 
 		for (int i = 0; i < 4; i++)
 		{
-			if (getWorld()->isEarth(x + 1, y - 1)) state = 0;
-			ticker = 0;
-			break;
+			if (getWorld()->isEarth(x + i, y - 1))
+			{
+				state = 0;
+				ticker = 0;
+				break;
+			}
 		}
 		moveTo(x, y - 1);
 		break;

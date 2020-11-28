@@ -11,12 +11,17 @@ GameWorld* createStudentWorld(string assetDir)
 
 int StudentWorld::init()
 {
+	int x, y;
 	initEarth(GameBoard); //make Earths
 	parts.emplace_back(std::shared_ptr<thing>(new Tunnelman(this)));
 	
 	for (int i = 0; i < B; i++)//adding boulders to pieces vector (need to finalize)
 	{
-		parts.emplace_back(std::shared_ptr<thing>(new Boulder(rand() % 59, rand() % 59, this)));
+		y = ((rand() + 1) % 59);
+		do {//avoid boulders in mine shaft
+			x = rand() % 59;
+		} while (x > 30 && x < 35);
+		parts.emplace_back(std::shared_ptr<thing>(new Boulder(x, y, this)));
 	}
 	return GWSTATUS_CONTINUE_GAME;
 }
