@@ -36,19 +36,48 @@ void Tunnelman::move(const int direction)
 	{
 	case KEY_PRESS_UP:
 		if (this->getDirection() != up) this->setDirection(up);
-		else if (y <60) this->moveTo(x, y + 1);
+		else if (y < 60)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				if (getWorld()->boulderClash(x + i , y +4))return;
+			}
+			this->moveTo(x, y + 1);
+		}
 		break;
 	case KEY_PRESS_DOWN:
 		if (this->getDirection() != down) this->setDirection(down);
-		else if (y > 0) this->moveTo(x, y - 1);
+		else if (y > 0)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				if (getWorld()->boulderClash(x + i, y-1)) return;
+			}
+			this->moveTo(x, y - 1);
+		}
 		break;
 	case KEY_PRESS_LEFT:
 		if (this->getDirection() != left) this->setDirection(left);
-		else if (x > 0) this->moveTo(x - 1, y);
+		else if (x > 0)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				if (getWorld()->boulderClash(x-1, y + i))return;
+			}
+			this->moveTo(x - 1, y);
+		}
 		break;
 	case KEY_PRESS_RIGHT :
 		if (this->getDirection() != right) this->setDirection(right);
-		else if (x < 56) this->moveTo(x + 1, y);
+		else if (x < 56)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				if (getWorld()->boulderClash(x+4, y + i)) return;
+			}
+			if(getWorld())
+			this->moveTo(x + 1, y);
+		}
 		break;
 	default:
 		break;
@@ -118,7 +147,7 @@ void Boulder::doSomething()
 			{
 				state = 0;
 				ticker = 0;
-				break;
+				return;
 			}
 		}
 		moveTo(x, y - 1);

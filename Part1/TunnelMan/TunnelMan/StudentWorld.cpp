@@ -21,6 +21,14 @@ int StudentWorld::init()
 		do {//avoid boulders in mine shaft
 			x = rand() % 59;
 		} while (x > 30 && x < 35);
+		for (int c = 0; c < 4; c++)
+		{
+			for (int r = 0; r < 4; r++)
+			{
+				
+				ClearEarth(r+x, c+y);
+			}
+		}
 		parts.emplace_back(std::shared_ptr<thing>(new Boulder(x, y, this)));
 	}
 	return GWSTATUS_CONTINUE_GAME;
@@ -75,6 +83,23 @@ bool StudentWorld::isEarth(int x, int y)
 {
 	if (GameBoard[x][y]->isVisible())return true;
 	else return false;
+}
+
+bool StudentWorld::boulderClash(int x, int y) //Pass a point to it, return true if that point is within a boulder image
+{
+	int bx, by;
+	std::vector<std::shared_ptr<thing>>::iterator it = parts.begin();
+	while (it != parts.end())
+	{
+		if ((*it)->getID() == TID_BOULDER) // is the object a boulder
+		{
+			bx = (*it)->getX();
+			by = (*it)->getY();
+			if ((x >= bx && x <= bx + 3) && (y >= by && y <= by + 3)) return true; //pixel is within image
+		}
+		it++; //iterate 
+	}
+	return false; // if we cycle through the whole array of parts without clash return false
 }
 
 StudentWorld::~StudentWorld()
