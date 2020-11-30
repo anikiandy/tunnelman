@@ -13,13 +13,16 @@ int StudentWorld::init()
 {
 	int x, y;
 	initEarth(GameBoard); //make Earths
-	parts.emplace_back(std::shared_ptr<thing>(new Tunnelman(this)));
+	//player = nullptr;
+	player.reset(new Tunnelman(this));
+
+	parts.emplace_back(player);
 	
 	for (int i = 0; i < B; i++)//adding boulders to pieces vector (need to finalize)
 	{
 		do
 		{
-			y = ((rand() ) % 59)+5;
+			y = ((rand() ) % 59)+4;// lowest boulder at y=4
 			do {//avoid boulders in mine shaft
 				x = rand() % 59;
 			} while (x > 26 && x < 35);
@@ -31,9 +34,10 @@ int StudentWorld::init()
 				}
 			}
 		} while (boulderClash(x, y) || boulderClash(x + 3, y) ||
-			boulderClash(x, y + 3) || boulderClash(x + 3, y + 3));
+			boulderClash(x, y + 3) || boulderClash(x + 3, y + 3));//dont overlap boulders 
 		parts.emplace_back(std::shared_ptr<thing>(new Boulder(x, y, this)));
 	}
+	if (!player->amAlive())
 	return GWSTATUS_CONTINUE_GAME;
 }
 

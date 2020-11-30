@@ -26,17 +26,21 @@ public:
 	{
 		int pieceCount = 0;
 		//decLives();
-		std::vector<std::shared_ptr<thing>>::iterator it = parts.begin();
-		while (it != parts.end())
+		if (!player->amAlive())return GWSTATUS_PLAYER_DIED;
+		else
 		{
-			(*it)->doSomething();
-			it++;
+			std::vector<std::shared_ptr<thing>>::iterator it = parts.begin();
+			while (it != parts.end())
+			{
+				(*it)->doSomething();
+				it++;
+			}
+			removeDead(parts);
 		}
-		removeDead(parts);
-
 		//check dead
+		if (getLives() == 0)return GWSTATUS_PLAYER_DIED;
 		return GWSTATUS_CONTINUE_GAME;
-		return GWSTATUS_PLAYER_DIED;
+		//return GWSTATUS_PLAYER_DIED;
 	}
 
 	void removeDead(std::vector<std::shared_ptr<thing>> &parts);
@@ -48,7 +52,7 @@ public:
 
 	
 private:
-	Tunnelman* player;
+	std::shared_ptr<Tunnelman>player;
 	int B = 3; //number of boulders
 	Earth * GameBoard[BOARDSIZE][BOARDSIZE];
 	std::vector<std::shared_ptr<thing>> parts;//the things which need to doSomething

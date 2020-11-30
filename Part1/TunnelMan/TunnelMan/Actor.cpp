@@ -79,6 +79,9 @@ void Tunnelman::move(const int direction)
 			this->moveTo(x + 1, y);
 		}
 		break;
+	case KEY_PRESS_ESCAPE:
+		getWorld()->decLives();
+		break;
 	default:
 		break;
 	}
