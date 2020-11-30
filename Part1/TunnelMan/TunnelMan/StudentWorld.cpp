@@ -17,18 +17,21 @@ int StudentWorld::init()
 	
 	for (int i = 0; i < B; i++)//adding boulders to pieces vector (need to finalize)
 	{
-		y = ((rand() + 1) % 59);
-		do {//avoid boulders in mine shaft
-			x = rand() % 59;
-		} while (x > 30 && x < 35);
-		for (int c = 0; c < 4; c++)
+		do
 		{
-			for (int r = 0; r < 4; r++)
+			y = ((rand() ) % 59)+5;
+			do {//avoid boulders in mine shaft
+				x = rand() % 59;
+			} while (x > 26 && x < 35);
+			for (int c = 0; c < 4; c++) //clear earth behind boulder
 			{
-				
-				ClearEarth(r+x, c+y);
+				for (int r = 0; r < 4; r++)
+				{
+					ClearEarth(r + x, c + y);
+				}
 			}
-		}
+		} while (boulderClash(x, y) || boulderClash(x + 3, y) ||
+			boulderClash(x, y + 3) || boulderClash(x + 3, y + 3));
 		parts.emplace_back(std::shared_ptr<thing>(new Boulder(x, y, this)));
 	}
 	return GWSTATUS_CONTINUE_GAME;
