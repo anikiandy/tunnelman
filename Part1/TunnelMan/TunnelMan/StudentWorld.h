@@ -49,7 +49,7 @@ public:
 
 	virtual void cleanUp();
 	bool ClearEarth(int x, int y);
-
+	void makeRocks(int b);
 	
 private:
 	std::shared_ptr<Tunnelman>player;

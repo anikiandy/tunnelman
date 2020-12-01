@@ -2,6 +2,7 @@
 #include "Actor.h"
 #include <string>
 #include <iostream>
+#include <algorithm> 
 using namespace std;
 
 GameWorld* createStudentWorld(string assetDir)
@@ -11,33 +12,12 @@ GameWorld* createStudentWorld(string assetDir)
 
 int StudentWorld::init()
 {
-	int x, y;
-	initEarth(GameBoard); //make Earths
-	//player = nullptr;
-	player.reset(new Tunnelman(this));
-
-	parts.emplace_back(player);
 	
-	for (int i = 0; i < B; i++)//adding boulders to pieces vector (need to finalize)
-	{
-		do
-		{
-			y = ((rand() ) % 59)+4;// lowest boulder at y=4
-			do {//avoid boulders in mine shaft
-				x = rand() % 59;
-			} while (x > 26 && x < 35);
-			for (int c = 0; c < 4; c++) //clear earth behind boulder
-			{
-				for (int r = 0; r < 4; r++)
-				{
-					ClearEarth(r + x, c + y);
-				}
-			}
-		} while (boulderClash(x, y) || boulderClash(x + 3, y) ||
-			boulderClash(x, y + 3) || boulderClash(x + 3, y + 3));//dont overlap boulders 
-		parts.emplace_back(std::shared_ptr<thing>(new Boulder(x, y, this)));
-	}
-	if (!player->amAlive())
+	initEarth(GameBoard); //make Earths
+	player.reset(new Tunnelman(this)); //make player
+	parts.emplace_back(player); // put player into parts vector
+	makeRocks(std::min<int>(getLevel() / 2 + 2, 9));//construct rocks in parts vector
+
 	return GWSTATUS_CONTINUE_GAME;
 }
 
@@ -60,7 +40,7 @@ void StudentWorld::initEarth(Earth *board[BOARDSIZE][BOARDSIZE])
 		}
 	}
 }
-bool StudentWorld::ClearEarth(int x, int y)
+bool StudentWorld::ClearEarth(int x, int y) //turns visibilty off of earth 
 {
 	bool dug = false;
 	if (x <= 59 && x >= 0 && y >= 0 && y <= 59)
@@ -74,7 +54,32 @@ bool StudentWorld::ClearEarth(int x, int y)
 	return dug;
 }
 
-void StudentWorld::removeDead(std::vector<shared_ptr<thing>> &parts)
+void StudentWorld::makeRocks(int b) //places b boulders randomly, avoiding clashing eachother and the mine shaft
+{
+	int x, y;
+	for (int i = 0; i < B; i++)//adding boulders to pieces vector (need to finalize)
+	{
+		do
+		{
+			do {
+				y =rand() % 59;// lowest boulder at y=4
+			} while (y > 59 || y < 5);
+			do {//avoid boulders in mine shaft
+				x = rand() % 59;
+			} while ((x > 26 && x < 35) || x > 56);
+			for (int c = 0; c < 4; c++) //clear earth behind boulder
+			{
+				for (int r = 0; r < 4; r++)
+				{
+					ClearEarth(r + x, c + y);
+				}
+			}
+		} while (boulderClash(x, y) || boulderClash(x + 3, y) ||
+			boulderClash(x, y + 3) || boulderClash(x + 3, y + 3));//dont overlap boulders 
+		parts.emplace_back(std::shared_ptr<thing>(new Boulder(x, y, this)));
+	}
+}
+void StudentWorld::removeDead(std::vector<shared_ptr<thing>> &parts) //removes any thing objects which report to be not alive
 {
 	std::vector<shared_ptr<thing>>::iterator it = parts.begin();
 	while (it != parts.end())
@@ -86,7 +91,7 @@ void StudentWorld::removeDead(std::vector<shared_ptr<thing>> &parts)
 
 }
 
-bool StudentWorld::isEarth(int x, int y)
+bool StudentWorld::isEarth(int x, int y) // returns true if designated x,y coord is a piece of earth which is set to visible
 {
 	if (GameBoard[x][y]->isVisible())return true;
 	else return false;
@@ -111,8 +116,8 @@ bool StudentWorld::boulderClash(int x, int y) //Pass a point to it, return true 
 
 StudentWorld::~StudentWorld()
 {
-	parts.clear();
-	for (int c = 0; c < BOARDSIZE; c++)
+	parts.clear(); //clears parts vector of all the <things>
+	for (int c = 0; c < BOARDSIZE; c++) // delete earths
 	{
 		for (int r = 0; r < BOARDSIZE; r++)
 		{

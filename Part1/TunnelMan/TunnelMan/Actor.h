@@ -57,12 +57,18 @@ public:
 	virtual ~Boulder() {}
 	bool amAlive() { if (getY() > 0)return true; }
 private:
-	StudentWorld* world;
+
 	int state; //use for boulder state stable:0, Waiting:1, falling: 2
 	int ticker; //used to delay fall
 	
 };
 
-
+//~~~~~~~~~~~~~~~~SQUIRT~~~~~~~~~~~~~~~~~~
+class Squirt : public thing
+{
+public:
+	Squirt(int x, int y, StudentWorld * here);
+	virtual ~Squirt(){}
+};
 
 #endif // ACTOR_H_

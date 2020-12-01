@@ -18,7 +18,7 @@ Earth::Earth(int x, int y, StudentWorld* here) :thing(TID_EARTH, here, x, y, rig
 }
 
 //~~~~~~~~~~~~functions for tunnelMan class~~~~~~~~~~~~~~~~~
-Tunnelman::Tunnelman (StudentWorld * here) : thing(TID_PLAYER, here, 30, 60, right, 1, 0)
+Tunnelman::Tunnelman (StudentWorld * here) : thing(TID_PLAYER, here, 30, 60, right, 1, 0) //constructor
 {
 	setVisible(true);
 	hp = 10;
@@ -114,7 +114,6 @@ bool Tunnelman::amAlive() {
 Boulder::Boulder(int x, int y, StudentWorld* here) : thing(TID_BOULDER, here, x, y, down, 1, 1)
  {
 	setVisible(true);
-	world = here;
 	state = 0; 
 	ticker = 0;
  }
