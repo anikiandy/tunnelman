@@ -57,7 +57,7 @@ bool StudentWorld::ClearEarth(int x, int y) //turns visibilty off of earth
 void StudentWorld::makeRocks(int b) //places b boulders randomly, avoiding clashing eachother and the mine shaft
 {
 	int x, y;
-	for (int i = 0; i < B; i++)//adding boulders to pieces vector (need to finalize)
+	for (int i = 0; i < b; i++)//adding boulders to pieces vector (need to finalize)
 	{
 		do
 		{

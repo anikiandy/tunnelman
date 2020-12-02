@@ -56,7 +56,7 @@ public:
 private:
 	std::shared_ptr<Tunnelman>player;
 	std::vector<std::shared_ptr<thing>> tempParts;
-	int B = 3; //number of boulders
+	int B; //number of boulders
 	Earth * GameBoard[BOARDSIZE][BOARDSIZE];
 	std::vector<std::shared_ptr<thing>> parts;//the things which need to doSomething
 };
