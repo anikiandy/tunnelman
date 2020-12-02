@@ -93,6 +93,7 @@ void Tunnelman::move(const int direction)
 		else if (dir == up) { x = getX(); y = getY() + 4; }
 		else if (dir == down) { x = getX(); y = getY()-4; }
 		this->getWorld()->addPart(std::shared_ptr<thing>(new Squirt(x, y, dir, getWorld())));
+		getWorld()->playSound(SOUND_PLAYER_SQUIRT);
 	}
 		break;
 	
