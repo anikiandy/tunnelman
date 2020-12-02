@@ -91,6 +91,16 @@ void StudentWorld::removeDead(std::vector<shared_ptr<thing>> &parts) //removes a
 
 }
 
+void StudentWorld::mergeTempParts()//merge anything in temp parts to parts list
+{
+	std::vector<std::shared_ptr<thing>>::iterator it = tempParts.begin();
+	while (it != tempParts.end())
+	{
+		parts.emplace_back(*it);
+		it++; 
+	}
+	tempParts.clear(); //clear vector
+}
 bool StudentWorld::isEarth(int x, int y) // returns true if designated x,y coord is a piece of earth which is set to visible
 {
 	if (GameBoard[x][y]->isVisible())return true;
@@ -116,6 +126,7 @@ bool StudentWorld::boulderClash(int x, int y) //Pass a point to it, return true 
 
 StudentWorld::~StudentWorld()
 {
+	player.reset();
 	parts.clear(); //clears parts vector of all the <things>
 	for (int c = 0; c < BOARDSIZE; c++) // delete earths
 	{
@@ -128,6 +139,7 @@ StudentWorld::~StudentWorld()
 
 void StudentWorld::cleanUp()
 {	
+	player.reset();
 	parts.clear();
 	for (int c = 0; c < BOARDSIZE; c++)
 	{
@@ -136,4 +148,9 @@ void StudentWorld::cleanUp()
 			GameBoard[r][c]->~Earth();
 		}
 	}
+}
+
+void StudentWorld::addPart(std::shared_ptr<thing> part) //put part into tempParts vector
+{
+	tempParts.emplace_back(part);
 }

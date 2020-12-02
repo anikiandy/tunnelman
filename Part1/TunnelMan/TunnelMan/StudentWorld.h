@@ -37,6 +37,7 @@ public:
 			}
 			removeDead(parts);
 		}
+		mergeTempParts();
 		//check dead
 		if (getLives() == 0)return GWSTATUS_PLAYER_DIED;
 		return GWSTATUS_CONTINUE_GAME;
@@ -50,9 +51,11 @@ public:
 	virtual void cleanUp();
 	bool ClearEarth(int x, int y);
 	void makeRocks(int b);
-	
+	void addPart(std::shared_ptr<thing> part);
+	void mergeTempParts();
 private:
 	std::shared_ptr<Tunnelman>player;
+	std::vector<std::shared_ptr<thing>> tempParts;
 	int B = 3; //number of boulders
 	Earth * GameBoard[BOARDSIZE][BOARDSIZE];
 	std::vector<std::shared_ptr<thing>> parts;//the things which need to doSomething

@@ -1,6 +1,8 @@
 #include "Actor.h"
 #include "StudentWorld.h"
 #include <iostream>
+#include <string>
+#include <memory>
 // Students:  Add code to this file (if you wish), Actor.h, StudentWorld.h, and StudentWorld.cpp
 
 //function for thing class
@@ -82,6 +84,18 @@ void Tunnelman::move(const int direction)
 	case KEY_PRESS_ESCAPE:
 		getWorld()->decLives();
 		break;
+	case KEY_PRESS_SPACE:
+	{
+		Direction dir = getDirection();
+		
+		if (dir == right) { x = getX() + 4; y = getY(); }
+		else if (dir == left) { x = getX()-4; y = getY(); }
+		else if (dir == up) { x = getX(); y = getY() + 4; }
+		else if (dir == down) { x = getX(); y = getY()-4; }
+		this->getWorld()->addPart(std::shared_ptr<thing>(new Squirt(x, y, dir, getWorld())));
+	}
+		break;
+	
 	default:
 		break;
 	}
@@ -114,6 +128,7 @@ bool Tunnelman::amAlive() {
 Boulder::Boulder(int x, int y, StudentWorld* here) : thing(TID_BOULDER, here, x, y, down, 1, 1)
  {
 	setVisible(true);
+	alive = true;
 	state = 0; 
 	ticker = 0;
  }
@@ -149,10 +164,45 @@ void Boulder::doSomething()
 			{
 				state = 0;
 				ticker = 0;
+				alive = false;
 				return;
 			}
 		}
 		moveTo(x, y - 1);
 		break;
 	}
+}
+
+//~~~~~~~~~~~~~~~~SQUIRT~~~~~~~~~~~~~~~~~~~
+Squirt::Squirt(int x, int y, Direction dir, StudentWorld* here) : thing(TID_WATER_SPURT, here, x, y, dir, 1, 1)
+{
+	setVisible(true); 
+	alive = true; 
+	ticks = 4;
+
+}
+
+void Squirt::doSomething()
+{
+	Direction dir = getDirection();
+	switch (dir)
+	{
+	case right:
+		if (getX() >= 59 || ticks == 0) alive = false;
+		else moveTo(getX() + 1, getY()); ticks--;
+		break;
+	case left:
+		if (getX() <= 0 || ticks ==0) alive = false;
+		else moveTo(getX() - 1, getY()); ticks--;
+		break;
+	case up:
+		if (getY() >= 59 || ticks == 0) alive = false;
+		else moveTo(getX(), getY() + 1); ticks--;
+		break;
+	case down:
+		if (getY() <= 0 || ticks == 0) alive = false;
+		else moveTo(getX(), getY() - 1); ticks--;
+		break;
+	}
+	return;
 }

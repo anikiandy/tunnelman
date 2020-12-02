@@ -2,6 +2,8 @@
 #define ACTOR_H_
 
 #include "GraphObject.h"
+#include <memory>
+#include <string>
 #include "GameConstants.h"
 class StudentWorld;
 int const BOARDSIZE = 60;
@@ -17,7 +19,7 @@ public:
 		setVisible(true);
 	}
 	virtual ~thing() {}
-	virtual bool amAlive() { return false; }
+	virtual bool amAlive() { return true; }
 	virtual void doSomething();
 	StudentWorld * getWorld() { return world; };
 private:
@@ -55,9 +57,9 @@ public:
 	Boulder(int x, int y, StudentWorld* here);
 	void doSomething();
 	virtual ~Boulder() {}
-	bool amAlive() { if (getY() > 0)return true; }
+	bool amAlive() { if (getY() > 0 && alive)return true; else return false; }
 private:
-
+	bool alive;
 	int state; //use for boulder state stable:0, Waiting:1, falling: 2
 	int ticker; //used to delay fall
 	
@@ -67,8 +69,13 @@ private:
 class Squirt : public thing
 {
 public:
-	Squirt(int x, int y, StudentWorld * here);
+	Squirt(int x, int y, Direction dir, StudentWorld * here);
+	void doSomething();
 	virtual ~Squirt(){}
+	bool amAlive() { if (alive) return true; else return false; }
+private:
+	bool alive; 
+	int ticks;
 };
 
 #endif // ACTOR_H_
