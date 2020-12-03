@@ -10,8 +10,19 @@ void thing::doSomething()
 {
 
 }
-
-//thing::~thing(){}
+bool thing::checkEarthSpan(int x, int y, char dir)
+{
+	switch (dir)
+	{
+	case 'y':
+		for (int i = 0; i <= 3; i++) if (getWorld()->isEarth(x, y + i)) return true;
+		return false;
+		break;
+	default:
+		for (int i = 0; i <= 3; i++) if (getWorld()->isEarth(x + i, y)) return true;
+		return false;
+	}
+}
 
 //~~~~~~~~~~~~~~functions for Earth class~~~~~~~~~~~~~~~~
 Earth::Earth(int x, int y, StudentWorld* here) :thing(TID_EARTH, here, x, y, right, 0.25, 3)
@@ -86,14 +97,31 @@ void Tunnelman::move(const int direction)
 		break;
 	case KEY_PRESS_SPACE:
 	{
-		Direction dir = getDirection();
+		//if (waters > 0)
 		
-		if (dir == right) { x = getX() + 4; y = getY(); }
-		else if (dir == left) { x = getX()-4; y = getY(); }
-		else if (dir == up) { x = getX(); y = getY() + 4; }
-		else if (dir == down) { x = getX(); y = getY()-4; }
-		this->getWorld()->addPart(std::shared_ptr<thing>(new Squirt(x, y, dir, getWorld())));
-		getWorld()->playSound(SOUND_PLAYER_SQUIRT);
+			int x = getX(); int y = getY();
+			Direction dir = getDirection();
+			//waters--; // dec waters
+			getWorld()->playSound(SOUND_PLAYER_SQUIRT); //play sound
+			if (dir == right) { x += 4;
+				if (x > 59) return; //if out of bounds
+				else if (checkEarthSpan(x, y, 'y') && (y < 59)) return; //if there is eath 
+			}
+			else if (dir == left) { x -= 4; 
+				if (x < 0) return; //if out of bounds
+				else if (checkEarthSpan(x, y, 'y')&& y < 59) return; //if there is eath 		
+			}
+			else if (dir == up) {  y  += 4; 
+				if (y > 59) return;
+				else if (checkEarthSpan(x, y, 'x')) return;
+			}
+			else if (dir == down) { y -= 4; 
+				if (y < 0) return;
+				else if (checkEarthSpan(x, y, 'x')) return;
+			}
+			this->getWorld()->addPart(std::shared_ptr<thing>(new Squirt(x, y, dir, getWorld())));
+			
+		
 	}
 		break;
 	
@@ -186,24 +214,30 @@ Squirt::Squirt(int x, int y, Direction dir, StudentWorld* here) : thing(TID_WATE
 void Squirt::doSomething()
 {
 	Direction dir = getDirection();
+	int x = getX(); int y = getY();
 	switch (dir)
 	{
 	case right:
-		if (getX() >= 59 || ticks == 0) alive = false;
+		if (((checkEarthSpan(x + 4, y, 'y'))) && y < 59) alive = false;
+		else if (ticks == 0 || x > 59) alive = false;
+		//else if )
 		else moveTo(getX() + 1, getY()); ticks--;
 		break;
 	case left:
-		if (getX() <= 0 || ticks ==0) alive = false;
+		if (((checkEarthSpan(x , y, 'y'))) && y < 59) alive = false;
+		else if (ticks == 0 || x < 0) alive = false; 
 		else moveTo(getX() - 1, getY()); ticks--;
 		break;
 	case up:
-		if (getY() >= 59 || ticks == 0) alive = false;
+		if (getY() >= 59 || ticks == 0 || (checkEarthSpan(x , y+4, 'x'))) alive = false;
 		else moveTo(getX(), getY() + 1); ticks--;
 		break;
 	case down:
-		if (getY() <= 0 || ticks == 0) alive = false;
+		if (getY() <= 0 || ticks == 0 || (checkEarthSpan(x, y  , 'x'))) alive = false;
 		else moveTo(getX(), getY() - 1); ticks--;
 		break;
 	}
 	return;
 }
+
+

@@ -9,6 +9,7 @@ class StudentWorld;
 int const BOARDSIZE = 60;
 
 // Students:  Add code to this file, Actor.cpp, StudentWorld.h, and StudentWorld.cpp
+
 class thing : public GraphObject
 {
 public:
@@ -22,6 +23,9 @@ public:
 	virtual bool amAlive() { return true; }
 	virtual void doSomething();
 	StudentWorld * getWorld() { return world; };
+	bool checkEarthSpan(int x, int y, char dir);
+
+
 private:
 	StudentWorld* world; 
 
