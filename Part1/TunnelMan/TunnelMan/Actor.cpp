@@ -105,11 +105,11 @@ void Tunnelman::move(const int direction)
 			getWorld()->playSound(SOUND_PLAYER_SQUIRT); //play sound
 			if (dir == right) { x += 4;
 				if (x > 59) return; //if out of bounds
-				else if (checkEarthSpan(x, y, 'y') && (y < 59)) return; //if there is eath 
+				else if (checkEarthSpan(x, y, 'y')) return; //if there is eath 
 			}
 			else if (dir == left) { x -= 4; 
 				if (x < 0) return; //if out of bounds
-				else if (checkEarthSpan(x, y, 'y')&& y < 59) return; //if there is eath 		
+				else if (checkEarthSpan(x, y, 'y')) return; //if there is eath 		
 			}
 			else if (dir == up) {  y  += 4; 
 				if (y > 59) return;
@@ -218,14 +218,14 @@ void Squirt::doSomething()
 	switch (dir)
 	{
 	case right:
-		if (((checkEarthSpan(x + 4, y, 'y'))) && y < 59) alive = false;
-		else if (ticks == 0 || x > 59) alive = false;
+		if (checkEarthSpan(x + 4, y, 'y')) alive = false;
+		else if (ticks == 0 || x + 4 > 59 ) alive = false;
 		//else if )
 		else moveTo(getX() + 1, getY()); ticks--;
 		break;
 	case left:
-		if (((checkEarthSpan(x , y, 'y'))) && y < 59) alive = false;
-		else if (ticks == 0 || x < 0) alive = false; 
+		if (checkEarthSpan(x , y, 'y')) alive = false;
+		else if (ticks == 0 || x - 1 < 0) alive = false; 
 		else moveTo(getX() - 1, getY()); ticks--;
 		break;
 	case up:
