@@ -24,6 +24,25 @@ bool thing::checkEarthSpan(int x, int y, char dir)
 	}
 }
 
+//~~~~~~~~~~~~~~~~~~~~~~~Collectable~~~~~~~~~~~~~~~~~~~
+Collectible::Collectible(int IMID, StudentWorld* here) : thing(IMID, here, rand() %(59-4), rand()%(59-4) , right, 1, 2) 
+{
+	
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~OIL~~~~~~~~~~~~~~~~~~~~~~~
+
+Oil::Oil( StudentWorld* here) : Collectible(TID_BARREL, here)
+{
+	setVisible(true);
+	alive = true; 
+}
+
+void Oil::doSomething()
+{
+
+}
+
 //~~~~~~~~~~~~~~functions for Earth class~~~~~~~~~~~~~~~~
 Earth::Earth(int x, int y, StudentWorld* here) :thing(TID_EARTH, here, x, y, right, 0.25, 3)
 {

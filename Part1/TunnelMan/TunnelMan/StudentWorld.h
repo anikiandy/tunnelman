@@ -51,12 +51,14 @@ public:
 	virtual void cleanUp();
 	bool ClearEarth(int x, int y);
 	void makeRocks(int b);
+	void addCollectibles(int IMID, int num);
 	void addPart(std::shared_ptr<thing> part);
 	void mergeTempParts();
 private:
 	std::shared_ptr<Tunnelman>player;
 	std::vector<std::shared_ptr<thing>> tempParts;
-	int B; //number of boulders
+	std::vector<std::shared_ptr<Collectible>>goodies;
+	//int B; //number of boulders
 	Earth * GameBoard[BOARDSIZE][BOARDSIZE];
 	std::vector<std::shared_ptr<thing>> parts;//the things which need to doSomething
 };

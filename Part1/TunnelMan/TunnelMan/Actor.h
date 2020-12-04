@@ -31,6 +31,35 @@ private:
 
 };
 
+class Collectible : public thing
+{
+public:
+	Collectible(int IMID, StudentWorld * here);
+	virtual void doSomething() {}
+	virtual bool amAlive() { return false; }
+	virtual ~Collectible() {}
+};
+
+class Oil : public Collectible
+{
+public:
+	Oil( StudentWorld* here);
+	void doSomething();
+	bool amAlive() { return alive ?  true :  false; }
+	virtual ~Oil() {}
+private:
+	bool alive; 
+};
+
+//class Gold : public Collectible
+//{
+//public:
+//	Gold(int IMID, StudentWorld* here);
+//	virtual ~Gold() {}
+//	bool amAlive();
+//	void doSomething();
+//};
+
 class Earth : public thing
 {
 public:

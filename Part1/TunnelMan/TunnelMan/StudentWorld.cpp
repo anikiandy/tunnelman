@@ -17,6 +17,7 @@ int StudentWorld::init()
 	player.reset(new Tunnelman(this)); //make player
 	parts.emplace_back(player); // put player into parts vector
 	makeRocks(std::min<int>(getLevel() / 2 + 2, 9));//construct rocks in parts vector
+	addCollectibles(TID_BARREL, std::min<int>(2 + getLevel(), 21));
 
 	return GWSTATUS_CONTINUE_GAME;
 }
@@ -107,6 +108,19 @@ bool StudentWorld::isEarth(int x, int y) // returns true if designated x,y coord
 	else if (x < 0 || x > 59) return true;
 	else if (GameBoard[x][y]->isVisible())return true;
 	else return false;
+}
+void StudentWorld::addCollectibles(int IMID, int num)
+{
+	for (int i = 0; i < num; i++)
+	{
+		switch (IMID)
+		{
+		case TID_BARREL:
+			goodies.emplace_back(std::shared_ptr<Collectible>(new Oil(this)));
+			break;
+		}
+	}
+
 }
 
 bool StudentWorld::boulderClash(int x, int y) //Pass a point to it, return true if that point is within a boulder image
