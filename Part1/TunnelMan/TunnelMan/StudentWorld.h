@@ -35,7 +35,14 @@ public:
 				(*it)->doSomething();
 				it++;
 			}
+			std::vector<std::shared_ptr<Collectible>>::iterator it2 = goodies.begin();
+			while (it2 != goodies.end())
+			{
+				(*it2)->doSomething();
+				it2++;
+			}
 			removeDead(parts);
+			
 		}
 		mergeTempParts();
 		//check dead
@@ -54,6 +61,7 @@ public:
 	void addCollectibles(int IMID, int num);
 	void addPart(std::shared_ptr<thing> part);
 	void mergeTempParts();
+	void playerPosition(int &x, int &y);
 private:
 	std::shared_ptr<Tunnelman>player;
 	std::vector<std::shared_ptr<thing>> tempParts;

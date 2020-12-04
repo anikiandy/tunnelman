@@ -123,6 +123,11 @@ void StudentWorld::addCollectibles(int IMID, int num)
 
 }
 
+void StudentWorld::playerPosition(int& x, int& y)
+{
+	x = player->getX();
+	y = player->getY();
+}
 bool StudentWorld::boulderClash(int x, int y) //Pass a point to it, return true if that point is within a boulder image
 {
 	int bx, by;

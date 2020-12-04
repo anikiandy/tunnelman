@@ -34,12 +34,18 @@ Collectible::Collectible(int IMID, StudentWorld* here) : thing(IMID, here, rand(
 
 Oil::Oil( StudentWorld* here) : Collectible(TID_BARREL, here)
 {
-	setVisible(true);
+	setVisible(false);
 	alive = true; 
 }
 
 void Oil::doSomething()
 {
+	//look for tunnel man
+	int playerX, playerY, myX, myY;
+	myX = getX();
+	myY = getY();
+	getWorld()->playerPosition(playerX, playerY);
+	if(sqrt(pow(myX - playerX , 2) + pow(myY - playerY , 2)) <= 6) setVisible(true);
 
 }
 
