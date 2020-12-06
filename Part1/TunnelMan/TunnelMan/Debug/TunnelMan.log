@@ -12,8 +12,10 @@ C:\CS_assignments\tunnelman\Part1\TunnelMan\TunnelMan\Actor.cpp(80,71): warning 
 C:\CS_assignments\tunnelman\Part1\TunnelMan\TunnelMan\Actor.cpp(80,62): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\CS_assignments\tunnelman\Part1\TunnelMan\TunnelMan\Actor.cpp(85,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\CS_assignments\tunnelman\Part1\TunnelMan\TunnelMan\Actor.cpp(85,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\CS_assignments\tunnelman\Part1\TunnelMan\TunnelMan\Actor.cpp(104,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\CS_assignments\tunnelman\Part1\TunnelMan\TunnelMan\Actor.cpp(104,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\CS_assignments\tunnelman\Part1\TunnelMan\TunnelMan\Actor.cpp(105,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\CS_assignments\tunnelman\Part1\TunnelMan\TunnelMan\Actor.cpp(105,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   StudentWorld.cpp
+C:\CS_assignments\tunnelman\Part1\TunnelMan\TunnelMan\StudentWorld.cpp(184,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\CS_assignments\tunnelman\Part1\TunnelMan\TunnelMan\StudentWorld.cpp(184,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Generating Code...
   TunnelMan.vcxproj -> C:\CS_assignments\tunnelman\Part1\TunnelMan\Debug\TunnelMan.exe

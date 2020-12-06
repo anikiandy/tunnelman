@@ -85,6 +85,7 @@ void Gold::doSomething()
 	else if (distanceFromMe(playerX, playerY) <= 3)
 	{
 		getWorld()->playSound(SOUND_GOT_GOODIE);
+		getWorld()->incGold();
 		setAlive(false);
 	}
 }
@@ -104,6 +105,7 @@ void Sonar::doSomething()
 	else if (distanceFromMe(playerX, playerY) <= 3)
 	{
 		setAlive(false);
+		getWorld()->incSonar();
 		getWorld()->playSound(SOUND_GOT_GOODIE);
 	}
 	else ticks--;
@@ -122,8 +124,9 @@ Tunnelman::Tunnelman (StudentWorld * here) : thing(TID_PLAYER, here, 30, 60, rig
 	setVisible(true);
 	hp = 10;
 	waters = 5;
-	sonars = 10;
+	sonars = 1;
 	nugs = 0;
+	golds = 0;
 }
 
 void Tunnelman::move(const int direction)
@@ -184,8 +187,6 @@ void Tunnelman::move(const int direction)
 		break;
 	case KEY_PRESS_SPACE:
 	{
-		//if (waters > 0)
-		
 			int x = getX(); int y = getY();
 			Direction dir = getDirection();
 			//waters--; // dec waters
@@ -206,12 +207,19 @@ void Tunnelman::move(const int direction)
 				if (y < 0) return;
 				else if (checkEarthSpan(x, y, 'x')) return;
 			}
-			this->getWorld()->addPart(std::shared_ptr<thing>(new Squirt(x, y, dir, getWorld())));
-			
-		
+			this->getWorld()->addPart(std::shared_ptr<thing>(new Squirt(x, y, dir, getWorld())));	
 	}
 		break;
-	
+	case 'z' :
+	case 'Z':
+		if (sonars > 0)
+		{
+			getWorld()->echo();
+			getWorld()->playSound(SOUND_SONAR);
+			sonars--;
+		}
+		break;
+
 	default:
 		break;
 	}

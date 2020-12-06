@@ -52,6 +52,7 @@ public:
 		mergeTempParts();
 		//check dead
 		if (getLives() == 0)return GWSTATUS_PLAYER_DIED;
+		else if (!oilsLeft()) return GWSTATUS_FINISHED_LEVEL;
 		return GWSTATUS_CONTINUE_GAME;
 		//return GWSTATUS_PLAYER_DIED;
 	}
@@ -63,6 +64,11 @@ public:
 
 	virtual void cleanUp();
 	bool ClearEarth(int x, int y);
+	void incSonar() { player->incSonar(); }
+	void echo();
+	bool oilsLeft();
+	void incGold() { player->incGold(); }
+	void incWater() { player->incWater(); }
 	void makeRocks(int b);
 	void addCollectibles(int IMID, int num, int option);
 	void addPart(std::shared_ptr<thing> part);

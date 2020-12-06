@@ -81,11 +81,14 @@ public:
 	virtual ~Tunnelman() {}
 	void doSomething();
 	void move(const int direction);
-	//bool amAlive();
+	void incSonar() { sonars++; }
+	void incWater() { waters++; }
+	void incGold() { golds++;  }
+
 	void dig();
 	//void setWorld(StudentWorld* here);
 private:
-	int hp, waters, sonars, nugs;
+	int hp, waters, sonars,golds, nugs;
 	
 };
 

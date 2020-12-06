@@ -143,6 +143,17 @@ void StudentWorld::addCollectibles(int IMID, int num, int option = 0)
 
 }
 
+bool StudentWorld::oilsLeft()
+{
+	std::vector<shared_ptr<Collectible>>::iterator it = goodies.begin();
+	while (it != goodies.end())
+	{
+		if ((*it)->getID() == TID_BARREL) return true;
+		it++;
+	}
+	return false;
+}
+
 void StudentWorld::playerPosition(int& x, int& y)
 {
 	x = player->getX();
@@ -165,10 +176,21 @@ bool StudentWorld::boulderClash(int x, int y) //Pass a point to it, return true 
 	return false; // if we cycle through the whole array of parts without clash return false
 }
 
+void StudentWorld::echo()
+{
+	std::vector<shared_ptr<Collectible>>::iterator it = goodies.begin();
+	while (it != goodies.end())
+	{
+		if ((*it)->distanceFromMe(player->getX(), player->getY()) <= 12) (*it)->setVisible(true);
+		it++;
+	}
+}
+
 StudentWorld::~StudentWorld()
 {
 	player.reset();
 	parts.clear(); //clears parts vector of all the <things>
+	goodies.clear();
 	for (int c = 0; c < BOARDSIZE; c++) // delete earths
 	{
 		for (int r = 0; r < BOARDSIZE; r++)
@@ -182,6 +204,7 @@ void StudentWorld::cleanUp()
 {	
 	player.reset();
 	parts.clear();
+	goodies.clear();
 	for (int c = 0; c < BOARDSIZE; c++)
 	{
 		for (int r = 0; r < BOARDSIZE; r++)
