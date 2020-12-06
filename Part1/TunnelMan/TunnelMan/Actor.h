@@ -18,17 +18,18 @@ public:
 	{
 		world = here;
 		setVisible(true);
+		alive = true;
 	}
 	virtual ~thing() {}
-	virtual bool amAlive() { return true; }
+	void setAlive(bool b) { alive = b; }
+	bool amAlive() { return alive ? true : false; }
 	virtual void doSomething();
+	int distanceFromMe(float x, float y); 
 	StudentWorld * getWorld() { return world; };
 	bool checkEarthSpan(int x, int y, char dir);
-
-
 private:
 	StudentWorld* world; 
-
+	bool alive;
 };
 
 class Collectible : public thing
@@ -36,7 +37,6 @@ class Collectible : public thing
 public:
 	Collectible(int IMID, StudentWorld * here);
 	virtual void doSomething() {}
-	virtual bool amAlive() { return false; }
 	virtual ~Collectible() {}
 };
 
@@ -45,20 +45,16 @@ class Oil : public Collectible
 public:
 	Oil( StudentWorld* here);
 	void doSomething();
-	bool amAlive() { return alive ?  true :  false; }
 	virtual ~Oil() {}
-private:
-	bool alive; 
 };
 
-//class Gold : public Collectible
-//{
-//public:
-//	Gold(int IMID, StudentWorld* here);
-//	virtual ~Gold() {}
-//	bool amAlive();
-//	void doSomething();
-//};
+class Gold : public Collectible
+{
+public:
+	Gold(StudentWorld* here, int visibility);
+	virtual ~Gold() {}
+	void doSomething();
+};
 
 class Earth : public thing
 {
@@ -75,7 +71,7 @@ public:
 	virtual ~Tunnelman() {}
 	void doSomething();
 	void move(const int direction);
-	bool amAlive();
+	//bool amAlive();
 	void dig();
 	//void setWorld(StudentWorld* here);
 private:
@@ -90,9 +86,7 @@ public:
 	Boulder(int x, int y, StudentWorld* here);
 	void doSomething();
 	virtual ~Boulder() {}
-	bool amAlive() { if (getY() > 0 && alive)return true; else return false; }
 private:
-	bool alive;
 	int state; //use for boulder state stable:0, Waiting:1, falling: 2
 	int ticker; //used to delay fall
 	
@@ -105,9 +99,7 @@ public:
 	Squirt(int x, int y, Direction dir, StudentWorld * here);
 	void doSomething();
 	virtual ~Squirt(){}
-	bool amAlive() { if (alive) return true; else return false; }
 private:
-	bool alive; 
 	int ticks;
 };
 

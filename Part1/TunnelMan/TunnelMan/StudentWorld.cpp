@@ -17,7 +17,8 @@ int StudentWorld::init()
 	player.reset(new Tunnelman(this)); //make player
 	parts.emplace_back(player); // put player into parts vector
 	makeRocks(std::min<int>(getLevel() / 2 + 2, 9));//construct rocks in parts vector
-	addCollectibles(TID_BARREL, std::min<int>(2 + getLevel(), 21));
+	addCollectibles(TID_BARREL, std::min<int>(2 + getLevel(), 21),0);
+	addCollectibles(TID_GOLD, std::max<int>(5 - getLevel() / 2, 2),1);
 
 	return GWSTATUS_CONTINUE_GAME;
 }
@@ -91,6 +92,17 @@ void StudentWorld::removeDead(std::vector<shared_ptr<thing>> &parts) //removes a
 	}
 
 }
+void StudentWorld::removeDeadCollectibles(std::vector<std::shared_ptr<Collectible>>& goodies)
+{
+	std::vector<shared_ptr<Collectible>>::iterator it = goodies.begin();
+	while (it != goodies.end())
+	{
+		if (!(*it)->amAlive())
+			it = goodies.erase(it);
+		else it++;
+	}
+
+}
 
 void StudentWorld::mergeTempParts()//merge anything in temp parts to parts list
 {
@@ -109,7 +121,7 @@ bool StudentWorld::isEarth(int x, int y) // returns true if designated x,y coord
 	else if (GameBoard[x][y]->isVisible())return true;
 	else return false;
 }
-void StudentWorld::addCollectibles(int IMID, int num)
+void StudentWorld::addCollectibles(int IMID, int num, int option = 0)
 {
 	for (int i = 0; i < num; i++)
 	{
@@ -118,6 +130,8 @@ void StudentWorld::addCollectibles(int IMID, int num)
 		case TID_BARREL:
 			goodies.emplace_back(std::shared_ptr<Collectible>(new Oil(this)));
 			break;
+		case TID_GOLD:
+			goodies.emplace_back(std::shared_ptr<Collectible>(new Gold(this, option)));
 		}
 	}
 

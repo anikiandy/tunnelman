@@ -42,6 +42,7 @@ public:
 				it2++;
 			}
 			removeDead(parts);
+			removeDeadCollectibles(goodies);
 			
 		}
 		mergeTempParts();
@@ -52,13 +53,14 @@ public:
 	}
 
 	void removeDead(std::vector<std::shared_ptr<thing>> &parts);
+	void removeDeadCollectibles(std::vector<std::shared_ptr<Collectible>>&goodie);
 	bool boulderClash(int x, int y);
 	bool isEarth(int x, int y);
 
 	virtual void cleanUp();
 	bool ClearEarth(int x, int y);
 	void makeRocks(int b);
-	void addCollectibles(int IMID, int num);
+	void addCollectibles(int IMID, int num, int option);
 	void addPart(std::shared_ptr<thing> part);
 	void mergeTempParts();
 	void playerPosition(int &x, int &y);

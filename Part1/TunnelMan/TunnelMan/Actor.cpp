@@ -10,6 +10,10 @@ void thing::doSomething()
 {
 
 }
+int thing::distanceFromMe(float x, float y)
+{
+	return sqrt(pow(getX() - x, 2) + pow(getY() - y, 2));
+}
 bool thing::checkEarthSpan(int x, int y, char dir)
 {
 	switch (dir)
@@ -35,17 +39,41 @@ Collectible::Collectible(int IMID, StudentWorld* here) : thing(IMID, here, rand(
 Oil::Oil( StudentWorld* here) : Collectible(TID_BARREL, here)
 {
 	setVisible(false);
-	alive = true; 
+	//alive = true; 
 }
 
 void Oil::doSomething()
 {
 	//look for tunnel man
-	int playerX, playerY, myX, myY;
-	myX = getX();
-	myY = getY();
+	int playerX, playerY;
 	getWorld()->playerPosition(playerX, playerY);
-	if(sqrt(pow(myX - playerX , 2) + pow(myY - playerY , 2)) <= 6) setVisible(true);
+	//if(sqrt(pow(myX - playerX , 2) + pow(myY - playerY , 2)) <= 6) setVisible(true); //radius <= 4 +2
+	if (amAlive())
+	{
+
+		if (distanceFromMe(playerX, playerY) <= 4 && distanceFromMe(playerX, playerY) > 3)
+		{
+			setVisible(true);
+			return;
+		}
+		else if (distanceFromMe(playerX, playerY) <= 3)
+		{
+			setAlive(false);
+			getWorld()->playSound(SOUND_FOUND_OIL);
+			return;
+		}
+	}
+}
+
+//~!~~~~~~~~~~~~~~GOOOOOLD~~~~~~~~~~~
+
+Gold::Gold(StudentWorld* here, int visibility): Collectible(TID_GOLD, here)
+{
+	(visibility == 0) ? setVisible(true) : setVisible(false);
+}
+
+void Gold::doSomething()
+{
 
 }
 
@@ -168,13 +196,14 @@ void Tunnelman::dig() //asks to clear 4x4 earth at tunnel mans position
 	}
 	if (dug) getWorld()->playSound(SOUND_DIG);
 }
-bool Tunnelman::amAlive() {
-	if (hp > 0) return true;
-	else return false;
-}
+
  void Tunnelman::doSomething() {
 	 int input;
 	 //move or whatever 
+	 if (hp <= 0) {
+		 setAlive(false);
+		 return;
+	 }
 	 if (getWorld()->getKey(input))move(input);
  }
 
@@ -182,7 +211,6 @@ bool Tunnelman::amAlive() {
 Boulder::Boulder(int x, int y, StudentWorld* here) : thing(TID_BOULDER, here, x, y, down, 1, 1)
  {
 	setVisible(true);
-	alive = true;
 	state = 0; 
 	ticker = 0;
  }
@@ -218,7 +246,7 @@ void Boulder::doSomething()
 			{
 				state = 0;
 				ticker = 0;
-				alive = false;
+				setAlive(false);
 				return;
 			}
 		}
@@ -231,9 +259,7 @@ void Boulder::doSomething()
 Squirt::Squirt(int x, int y, Direction dir, StudentWorld* here) : thing(TID_WATER_SPURT, here, x, y, dir, 1, 1)
 {
 	setVisible(true); 
-	alive = true; 
 	ticks = 4;
-
 }
 
 void Squirt::doSomething()
@@ -243,22 +269,21 @@ void Squirt::doSomething()
 	switch (dir)
 	{
 	case right:
-		if (checkEarthSpan(x + 4, y, 'y')) alive = false;
-		else if (ticks == 0 || x + 4 > 59 ) alive = false;
-		//else if )
+		if (checkEarthSpan(x + 4, y, 'y')) setAlive(false);
+		else if (ticks == 0 || x + 4 > 59 ) setAlive(false);
 		else moveTo(getX() + 1, getY()); ticks--;
 		break;
 	case left:
-		if (checkEarthSpan(x , y, 'y')) alive = false;
-		else if (ticks == 0 || x - 1 < 0) alive = false; 
+		if (checkEarthSpan(x , y, 'y')) setAlive(false);
+		else if (ticks == 0 || x - 1 < 0) setAlive(false);
 		else moveTo(getX() - 1, getY()); ticks--;
 		break;
 	case up:
-		if (getY() >= 59 || ticks == 0 || (checkEarthSpan(x , y+4, 'x'))) alive = false;
+		if (getY() >= 59 || ticks == 0 || (checkEarthSpan(x , y+4, 'x')))setAlive(false);
 		else moveTo(getX(), getY() + 1); ticks--;
 		break;
 	case down:
-		if (getY() <= 0 || ticks == 0 || (checkEarthSpan(x, y  , 'x'))) alive = false;
+		if (getY() <= 0 || ticks == 0 || (checkEarthSpan(x, y, 'x'))) setAlive(false);
 		else moveTo(getX(), getY() - 1); ticks--;
 		break;
 	}
