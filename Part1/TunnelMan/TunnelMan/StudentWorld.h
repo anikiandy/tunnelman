@@ -24,8 +24,11 @@ public:
 	virtual int init();
 	virtual int move()
 	{
+		int G = getLevel() * 25 + 300; //random number
+		int match = rand() % G;
+		G = rand() % G;
+		if (G == match)  addCollectibles(TID_SONAR, 1, std::max<int>(100, 300 - 10 * getLevel()));
 		int pieceCount = 0;
-		//decLives();
 		if (!player->amAlive())return GWSTATUS_PLAYER_DIED;
 		else
 		{
@@ -41,6 +44,7 @@ public:
 				(*it2)->doSomething();
 				it2++;
 			}
+	
 			removeDead(parts);
 			removeDeadCollectibles(goodies);
 			

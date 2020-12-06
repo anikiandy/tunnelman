@@ -20,7 +20,8 @@ int StudentWorld::init()
 	addCollectibles(TID_BARREL, std::min<int>(2 + getLevel(), 21),0);
 	addCollectibles(TID_GOLD, std::max<int>(5 - getLevel() / 2, 2),1);
 
-	return GWSTATUS_CONTINUE_GAME;
+	return (player->amAlive()) ? GWSTATUS_CONTINUE_GAME : GWSTATUS_PLAYER_DIED;
+
 }
 
 void StudentWorld::initEarth(Earth *board[BOARDSIZE][BOARDSIZE])
@@ -132,6 +133,11 @@ void StudentWorld::addCollectibles(int IMID, int num, int option = 0)
 			break;
 		case TID_GOLD:
 			goodies.emplace_back(std::shared_ptr<Collectible>(new Gold(this, option)));
+			break;
+
+		case TID_SONAR:
+			goodies.emplace_back(std::shared_ptr<Collectible>(new Sonar(this, option)));
+			break;
 		}
 	}
 

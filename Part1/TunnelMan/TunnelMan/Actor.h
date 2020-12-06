@@ -56,6 +56,16 @@ public:
 	void doSomething();
 };
 
+
+class Sonar : public Collectible
+{
+public:
+	Sonar(StudentWorld* here, int Ticks);
+	virtual ~Sonar() {}
+	void doSomething();
+private:
+	int ticks;
+};
 class Earth : public thing
 {
 public:

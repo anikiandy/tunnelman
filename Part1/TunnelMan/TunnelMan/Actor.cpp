@@ -29,9 +29,10 @@ bool thing::checkEarthSpan(int x, int y, char dir)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~Collectable~~~~~~~~~~~~~~~~~~~
-Collectible::Collectible(int IMID, StudentWorld* here) : thing(IMID, here, rand() %(59-4), rand()%(59-4) , right, 1, 2) 
+Collectible::Collectible(int IMID, StudentWorld* here) : thing(IMID, here, 
+	(IMID == TID_SONAR) ? 0 : rand() %(59-4), (IMID == TID_SONAR) ? 60: rand()%(59-4) , right, 1, 2) 
 {
-	
+
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~OIL~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,6 +75,38 @@ Gold::Gold(StudentWorld* here, int visibility): Collectible(TID_GOLD, here)
 
 void Gold::doSomething()
 {
+	int playerX, playerY;
+	getWorld()->playerPosition(playerX, playerY);
+	if (distanceFromMe(playerX, playerY) <= 4 && distanceFromMe(playerX, playerY) > 3)
+	{
+		setVisible(true);
+		return;
+	 }
+	else if (distanceFromMe(playerX, playerY) <= 3)
+	{
+		getWorld()->playSound(SOUND_GOT_GOODIE);
+		setAlive(false);
+	}
+}
+
+//~~~~~~~~~~~~~~~~~~~~Sonar~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Sonar::Sonar(StudentWorld* here, int Ticks) : Collectible(TID_SONAR, here)
+{
+	setVisible(true);
+	ticks = Ticks;
+}
+
+void Sonar::doSomething()
+{
+	int playerX, playerY;
+	getWorld()->playerPosition(playerX, playerY);
+	if (ticks <= 0) setAlive(false);
+	else if (distanceFromMe(playerX, playerY) <= 3)
+	{
+		setAlive(false);
+		getWorld()->playSound(SOUND_GOT_GOODIE);
+	}
+	else ticks--;
 
 }
 
@@ -146,6 +179,7 @@ void Tunnelman::move(const int direction)
 		}
 		break;
 	case KEY_PRESS_ESCAPE:
+		hp = 0;
 		getWorld()->decLives();
 		break;
 	case KEY_PRESS_SPACE:
