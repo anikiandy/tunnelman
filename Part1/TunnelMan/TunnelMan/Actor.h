@@ -24,7 +24,7 @@ public:
 	void setAlive(bool b) { alive = b; }
 	bool amAlive() { return alive ? true : false; }
 	virtual void doSomething();
-	int distanceFromMe(float x, float y); 
+	int distanceFromMe(const float &x, const float &y); 
 	StudentWorld * getWorld() { return world; };
 	bool checkEarthSpan(int x, int y, char dir);
 private:

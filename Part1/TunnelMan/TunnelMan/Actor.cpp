@@ -10,7 +10,7 @@ void thing::doSomething()
 {
 
 }
-int thing::distanceFromMe(float x, float y)
+int thing::distanceFromMe(const float &x, const  float &y)
 {
 	return sqrt(pow(getX() - x, 2) + pow(getY() - y, 2));
 }
