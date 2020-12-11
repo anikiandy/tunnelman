@@ -60,6 +60,8 @@ void Oil::doSomething()
 		else if (distanceFromMe(playerX, playerY) <= 3)
 		{
 			setAlive(false);
+			getWorld()->decOil();
+			getWorld()->increaseScore(1000);
 			getWorld()->playSound(SOUND_FOUND_OIL);
 			return;
 		}
@@ -86,6 +88,7 @@ void Gold::doSomething()
 	{
 		getWorld()->playSound(SOUND_GOT_GOODIE);
 		getWorld()->incGold();
+		getWorld()->increaseScore(10);
 		setAlive(false);
 	}
 }
@@ -107,6 +110,7 @@ void Sonar::doSomething()
 		setAlive(false);
 		getWorld()->incSonar();
 		getWorld()->playSound(SOUND_GOT_GOODIE);
+		getWorld()->increaseScore(75);
 	}
 	else ticks--;
 

@@ -12,12 +12,12 @@ GameWorld* createStudentWorld(string assetDir)
 
 int StudentWorld::init()
 {
-	
+	oils = std::min<int>(2 + getLevel(), 21);
 	initEarth(GameBoard); //make Earths
 	player.reset(new Tunnelman(this)); //make player
 	parts.emplace_back(player); // put player into parts vector
 	makeRocks(std::min<int>(getLevel() / 2 + 2, 9));//construct rocks in parts vector
-	addCollectibles(TID_BARREL, std::min<int>(2 + getLevel(), 21),0);
+	addCollectibles(TID_BARREL, oils,0);//make oil
 	addCollectibles(TID_GOLD, std::max<int>(5 - getLevel() / 2, 2),1);
 
 	return (player->amAlive()) ? GWSTATUS_CONTINUE_GAME : GWSTATUS_PLAYER_DIED;
@@ -217,4 +217,25 @@ void StudentWorld::cleanUp()
 void StudentWorld::addPart(std::shared_ptr<thing> part) //put part into tempParts vector
 {
 	tempParts.emplace_back(part);
+}
+
+string StudentWorld::getInfo()
+{
+
+	ostringstream oss;
+	//get level
+	oss << "Lvl:" << setw(3) << getLevel() << " ";
+	//lives
+	oss << "Lives:" << setw(2) << getLives() << " ";
+	//health
+	oss << "Hlth: " << setw(3) << player->getHp() << "% ";
+	//golds
+	oss << "Gld:" << setw(2) << player->getGold() << " ";
+	//oils
+	oss << "Oil Left:" << setw(2) << oils << " ";
+	//sonar
+	oss << "Sonar:" << setw(2) << player->getSonar() << " ";
+	//score
+	oss << "Scr: " << setw(5) << getScore(); 
+	return oss.str();
 }

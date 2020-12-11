@@ -8,6 +8,9 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
+#include <iostream>
+#include <iomanip>
+#include <sstream>
 using namespace std;
 // Students:  Add code to this file, StudentWorld.cpp, Actor.h, and Actor.cpp
 
@@ -52,6 +55,7 @@ public:
 			
 		}
 		mergeTempParts();
+		setGameStatText(getInfo());
 		//check dead
 		if (getLives() == 0)return GWSTATUS_PLAYER_DIED;
 		else if (!oilsLeft()) return GWSTATUS_FINISHED_LEVEL;
@@ -68,6 +72,7 @@ public:
 	bool ClearEarth(int x, int y);
 	void incSonar() { player->incSonar(); }
 	void echo();
+	void decOil() { oils--; }
 	bool oilsLeft();
 	void incGold() { player->incGold(); }
 	void incWater() { player->incWater(); }
@@ -76,11 +81,13 @@ public:
 	void addPart(std::shared_ptr<thing> part);
 	void mergeTempParts();
 	void playerPosition(int &x, int &y);
+	string getInfo();
 private:
 	std::shared_ptr<Tunnelman>player;
 	std::vector<std::shared_ptr<thing>> tempParts;
 	std::vector<std::shared_ptr<Collectible>>goodies;
 	//int B; //number of boulders
+	int oils;
 	Earth * GameBoard[BOARDSIZE][BOARDSIZE];
 	std::vector<std::shared_ptr<thing>> parts;//the things which need to doSomething
 };

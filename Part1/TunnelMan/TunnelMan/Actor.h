@@ -87,8 +87,13 @@ public:
 	void doSomething();
 	void move(const int direction);
 	void incSonar() { sonars++; }
+	int getSonar() { return sonars; }
 	void incWater() { waters++; }
+	int getWater() { return waters; }
+
 	void incGold() { golds++;  }
+	int getGold() { return golds; }
+	int getHp() { return hp *10; }
 
 	void dig();
 	//void setWorld(StudentWorld* here);
