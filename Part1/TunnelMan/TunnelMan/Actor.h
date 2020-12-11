@@ -59,6 +59,17 @@ public:
 	void doSomething();
 };
 
+//~~~~~~~~~~~~~~~~~~~~~~~~WATAH~~~~~~~~~~~~~~~~~
+class Water : public Collectible
+{
+public:
+	Water(StudentWorld *here, int Ticks);
+	virtual ~Water() {}
+	void doSomething();
+private:
+	int ticks;
+};
+
 //~~~~~~~~~~~~~~~~~~~~~~SONAR~~~~~~~~~~~~~~~~~~~~~~~~~
 class Sonar : public Collectible
 {
@@ -125,5 +136,6 @@ public:
 private:
 	int ticks;
 };
+
 
 #endif // ACTOR_H_

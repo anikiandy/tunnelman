@@ -116,6 +116,28 @@ void Sonar::doSomething()
 
 }
 
+//~~~~~~~~~~~~~~~~~~~~~WATAH~~~~~~~~~~~~~~~~~~~
+Water::Water(StudentWorld* here, int Ticks):Collectible(TID_WATER_POOL, here)
+{
+	setVisible(true);
+	ticks = Ticks; 
+}
+
+void Water::doSomething()
+{
+	int x, y;
+	getWorld()->playerPosition(x, y);
+	if (ticks <= 0) setAlive(false);
+	else if (distanceFromMe(x, y) <= 3)
+	{
+		setAlive(false);
+		getWorld()->incWater();
+		getWorld()->playSound(SOUND_GOT_GOODIE);
+		getWorld()->increaseScore(100);
+	}
+	else ticks--;
+}
+
 //~~~~~~~~~~~~~~functions for Earth class~~~~~~~~~~~~~~~~
 Earth::Earth(int x, int y, StudentWorld* here) :thing(TID_EARTH, here, x, y, right, 0.25, 3)
 {
@@ -191,9 +213,10 @@ void Tunnelman::move(const int direction)
 		break;
 	case KEY_PRESS_SPACE:
 	{
+		if (waters <= 0) return;
 			int x = getX(); int y = getY();
 			Direction dir = getDirection();
-			//waters--; // dec waters
+			waters--; // dec waters
 			getWorld()->playSound(SOUND_PLAYER_SQUIRT); //play sound
 			if (dir == right) { x += 4;
 				if (x > 59) return; //if out of bounds

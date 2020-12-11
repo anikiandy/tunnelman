@@ -31,7 +31,14 @@ public:
 		int G = getLevel() * 25 + 300; //random number
 		int match = rand() % G;
 		G = rand() % G;
-		if (G == match)  addCollectibles(TID_SONAR, 1, std::max<int>(100, 300 - 10 * getLevel()));
+		if (G == match)
+		{
+			int img;
+			G = G % 5;
+			img = (G == 0) ? TID_SONAR : TID_WATER_POOL;
+			addCollectibles(img, 1, std::max<int>(100, 300 - 10 * getLevel()));
+		}
+
 		//
 		int pieceCount = 0;
 		if (!player->amAlive())return GWSTATUS_PLAYER_DIED;

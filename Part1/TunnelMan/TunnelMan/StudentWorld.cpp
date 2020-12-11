@@ -138,6 +138,10 @@ void StudentWorld::addCollectibles(int IMID, int num, int option = 0)
 		case TID_SONAR:
 			goodies.emplace_back(std::shared_ptr<Collectible>(new Sonar(this, option)));
 			break;
+
+		case TID_WATER_POOL:
+			goodies.emplace_back(std::shared_ptr<Collectible>(new Water(this, option)));
+			break;
 		}
 	}
 
@@ -229,6 +233,8 @@ string StudentWorld::getInfo()
 	oss << "Lives:" << setw(2) << getLives() << " ";
 	//health
 	oss << "Hlth: " << setw(3) << player->getHp() << "% ";
+	//water
+	oss << "Wtr:" << setw(2) << player->getWater()<< " ";
 	//golds
 	oss << "Gld:" << setw(2) << player->getGold() << " ";
 	//oils
