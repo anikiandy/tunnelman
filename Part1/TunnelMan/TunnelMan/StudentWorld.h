@@ -7,7 +7,8 @@
 #include <string>
 #include <memory>
 #include <vector>
-
+#include <algorithm>
+using namespace std;
 // Students:  Add code to this file, StudentWorld.cpp, Actor.h, and Actor.cpp
 
 class StudentWorld : public GameWorld
@@ -28,6 +29,7 @@ public:
 		int match = rand() % G;
 		G = rand() % G;
 		if (G == match)  addCollectibles(TID_SONAR, 1, std::max<int>(100, 300 - 10 * getLevel()));
+		//
 		int pieceCount = 0;
 		if (!player->amAlive())return GWSTATUS_PLAYER_DIED;
 		else

@@ -9,7 +9,7 @@ class StudentWorld;
 int const BOARDSIZE = 60;
 
 // Students:  Add code to this file, Actor.cpp, StudentWorld.h, and StudentWorld.cpp
-
+//~~~~~~~~~~THINGS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class thing : public GraphObject
 {
 public:
@@ -32,6 +32,7 @@ private:
 	bool alive;
 };
 
+//~~~~~~~~~~~~~~~~~~~~~Collectible items~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Collectible : public thing
 {
 public:
@@ -40,6 +41,7 @@ public:
 	virtual ~Collectible() {}
 };
 
+//~~~~~~~~~~~~~~~~~~~~OIL~~~~~~~~~~~~~~~~~~~~~~~
 class Oil : public Collectible
 {
 public:
@@ -48,6 +50,7 @@ public:
 	virtual ~Oil() {}
 };
 
+//~~~~~~~~~~~~~~~~~~~~~Gold~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Gold : public Collectible
 {
 public:
@@ -56,7 +59,7 @@ public:
 	void doSomething();
 };
 
-
+//~~~~~~~~~~~~~~~~~~~~~~SONAR~~~~~~~~~~~~~~~~~~~~~~~~~
 class Sonar : public Collectible
 {
 public:
@@ -66,6 +69,8 @@ public:
 private:
 	int ticks;
 };
+
+//ERF~~~~ERF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Earth : public thing
 {
 public:
@@ -73,7 +78,7 @@ public:
 	virtual ~Earth() {};
 };
 
-
+//~~~~~~~~~~~~~~~~Tunnelman~~~~~~~~~~~~~~~~~~~~~
 class Tunnelman : public thing
 {
 public:
