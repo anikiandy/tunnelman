@@ -144,6 +144,59 @@ Earth::Earth(int x, int y, StudentWorld* here) :thing(TID_EARTH, here, x, y, rig
 	setVisible(true);
 }
 
+//~~~~~~~~Function for Protester~~~~~~~~~~~~
+
+Protester::Protester(StudentWorld * here):thing(TID_PROTESTER, here, 59,59, left, 1, 0)
+{
+	setVisible(true);
+	hp = 5;
+	restingTicks = max<int>(0, 3 - here->getLevel() / 4);
+	ticks = restingTicks;
+	spacesToMove = (rand() % 60) + 8; 
+}
+void Protester::doSomething()
+{
+	if (!amAlive())return;
+	else if (ticks == 0)
+	{
+		if (spacesToMove >= 0)
+		{
+			if (!moveInDirection(getDirection()))//if move was blocked change stuffs
+			{
+
+			}
+		}
+		ticks = restingTicks; 
+	}
+	else
+	{
+		ticks--; 
+	}
+}
+
+bool Protester::moveInDirection(int dir)
+{
+	switch (dir)
+	{
+	case right:
+
+		return true;
+		break;
+	case left:
+
+		return true;
+		break;
+	case up:
+
+		return true;
+		break;
+	case down:
+
+		return true;
+		break;
+	}
+
+}
 //~~~~~~~~~~~~functions for tunnelMan class~~~~~~~~~~~~~~~~~
 Tunnelman::Tunnelman (StudentWorld * here) : thing(TID_PLAYER, here, 30, 60, right, 1, 0) //constructor
 {

@@ -112,6 +112,20 @@ private:
 	int hp, waters, sonars,golds, nugs;
 	
 };
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~PROTESTER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Protester : public thing
+{
+public:
+	Protester(StudentWorld * here);
+	virtual ~Protester() {}
+	void doSomething();
+	bool moveInDirection(int dir);
+
+private:
+	int hp, restingTicks, ticks, spacesToMove;
+};
+
+
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~BOULDER STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Boulder : public thing
