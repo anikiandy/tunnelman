@@ -38,7 +38,19 @@ public:
 			img = (G == 0) ? TID_SONAR : TID_WATER_POOL;
 			addCollectibles(img, 1, std::max<int>(100, 300 - 10 * getLevel()));
 		}
+		if (pTicker >= pInterval)
+		{
+			//add protester
+			if (P < pMax)
+			{
+				tempParts.emplace_back(std::shared_ptr<thing>(new Protester(this))); // put a new protester
+				P++; //increment protester count 
+			}
 
+			//reset ticker 
+			pTicker = 0;
+		}
+		else pTicker++; 
 		//
 		int pieceCount = 0;
 		if (!player->amAlive())return GWSTATUS_PLAYER_DIED;
@@ -96,6 +108,7 @@ private:
 	std::vector<std::shared_ptr<Collectible>>goodies;
 	//int B; //number of boulders
 	int oils;
+	int P, pMax, pInterval, pTicker;
 	Earth * GameBoard[BOARDSIZE][BOARDSIZE];
 	std::vector<std::shared_ptr<thing>> parts;//the things which need to doSomething
 };

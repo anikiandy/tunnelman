@@ -13,10 +13,15 @@ GameWorld* createStudentWorld(string assetDir)
 int StudentWorld::init()
 {
 	oils = std::min<int>(2 + getLevel(), 21);
+	pMax = std::min<int>(15, 2 + getLevel() * 1.5);
+	pInterval = std::max<int>(25, 200 - getLevel());
+	pTicker = 0; 
+	P = 1;
 	initEarth(GameBoard); //make Earths
 	player.reset(new Tunnelman(this)); //make player
 	parts.emplace_back(player); // put player into parts vector
 	parts.emplace_back(std::shared_ptr<thing>(new Protester(this)));
+	
 	makeRocks(std::min<int>(getLevel() / 2 + 2, 9));//construct rocks in parts vector
 	addCollectibles(TID_BARREL, oils,0);//make oil
 	addCollectibles(TID_GOLD, std::max<int>(5 - getLevel() / 2, 2),1);
