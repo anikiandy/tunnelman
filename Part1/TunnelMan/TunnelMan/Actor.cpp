@@ -146,7 +146,7 @@ Earth::Earth(int x, int y, StudentWorld* here) :thing(TID_EARTH, here, x, y, rig
 
 //~~~~~~~~Function for Protester~~~~~~~~~~~~
 
-Protester::Protester(StudentWorld * here):thing(TID_PROTESTER, here, 59,59, left, 1, 0)
+Protester::Protester(StudentWorld * here):thing(TID_PROTESTER, here, 56 ,60, left, 1, 0)
 {
 	setVisible(true);
 	hp = 5;
@@ -157,41 +157,107 @@ Protester::Protester(StudentWorld * here):thing(TID_PROTESTER, here, 59,59, left
 void Protester::doSomething()
 {
 	if (!amAlive())return;
-	else if (ticks == 0)
+	else if (ticks == 0) //resting ticks have passed 
 	{
-		if (spacesToMove >= 0)
+		if (spacesToMove >= 0) //if we have not finished our random vector length
 		{
-			if (!moveInDirection(getDirection()))//if move was blocked change stuffs
+			Direction dir = getDirection(); //figure out the direction model is facing
+			if (!moveInDirection(dir) || spacesToMove == 0)//try to move in direction we're facing. if the move fails or spaces to move hit zero
 			{
+				int randomSelection; //use to random number
+				Direction newDir; //use for new direction
+				//select random direction that's clear
+				do
+				{
+					randomSelection = rand() % 4;
+					switch (randomSelection)
+					{
+					case 0:
+						newDir = up;
+						break;
+					case 1:
+						newDir = down;
+						break;
+					case 2:
+						newDir = right;
+						break;
+					case 3:
+						newDir = left;
+						break;
+					}
+				} while (!pathIsClear(newDir)); //check the path of new direction before commiting
+				setDirection(newDir); //direction is clear so we face the new direction and restart the process
 
-			}
+				spacesToMove = (rand() % 60) + 8; //reset the spaces to move counter
+			} spacesToMove--; //completed a move so dec spaces to move
 		}
-		ticks = restingTicks; 
+		ticks = restingTicks;  //reset the tick counter 
 	}
 	else
 	{
-		ticks--; 
+		ticks--; //decrement ticks, and sit
 	}
 }
 
-bool Protester::moveInDirection(int dir)
+bool Protester::pathIsClear(Direction dir)
 {
+	int x = getX();
+	int y = getY();
 	switch (dir)
 	{
-	case right:
-
-		return true;
-		break;
-	case left:
-
-		return true;
-		break;
 	case up:
-
+		for (int i = 0; i < 4; i++)
+		{
+			if (getWorld()->isEarth(x + i, y + 4)) return false;
+		}
 		return true;
 		break;
 	case down:
+		for (int i = 0; i < 4; i++)
+		{
+			if (getWorld()->isEarth(x + i, y - 1))return false;
+		}
+		return true;
+		break;
 
+	case right:
+		for (int i = 0; i < 4; i++)
+		{
+			if (getWorld()->isEarth(x + 4, y + i)) return false;
+
+		}
+		return true;
+		break;
+
+	case left:
+		for (int i = 0; i < 4; i++)
+		{
+			if (getWorld()->isEarth(x - 1, y + i))return false;
+
+		}
+		return true;
+		break;
+	}
+}
+bool Protester::moveInDirection(Direction dir)
+{
+	if (!pathIsClear(dir))return false;
+	switch (dir)
+	{
+	case right:
+		moveTo(getX() + 1, getY());
+		return true;
+		break;
+	case left:
+		moveTo(getX() - 1, getY());
+		return true;
+		break;
+	case up:
+		moveTo(getX(), getY() + 1);
+		return true;
+		break;
+	case down:
+		moveTo(getX(), getY() - 1);
 		return true;
 		break;
 	}

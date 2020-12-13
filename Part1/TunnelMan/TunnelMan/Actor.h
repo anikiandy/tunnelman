@@ -119,7 +119,8 @@ public:
 	Protester(StudentWorld * here);
 	virtual ~Protester() {}
 	void doSomething();
-	bool moveInDirection(int dir);
+	bool moveInDirection(Direction dir);
+	bool pathIsClear(Direction dir);
 
 private:
 	int hp, restingTicks, ticks, spacesToMove;

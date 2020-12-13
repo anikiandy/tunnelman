@@ -16,6 +16,7 @@ int StudentWorld::init()
 	initEarth(GameBoard); //make Earths
 	player.reset(new Tunnelman(this)); //make player
 	parts.emplace_back(player); // put player into parts vector
+	parts.emplace_back(std::shared_ptr<thing>(new Protester(this)));
 	makeRocks(std::min<int>(getLevel() / 2 + 2, 9));//construct rocks in parts vector
 	addCollectibles(TID_BARREL, oils,0);//make oil
 	addCollectibles(TID_GOLD, std::max<int>(5 - getLevel() / 2, 2),1);
@@ -117,7 +118,8 @@ void StudentWorld::mergeTempParts()//merge anything in temp parts to parts list
 }
 bool StudentWorld::isEarth(int x, int y) // returns true if designated x,y coord is a piece of earth which is set to visible
 {
-	if (y > 59) return false;
+	if (y > 59&& y < 64 && ( x > -1 ) && (x < 59)) return false;
+	if (y > 63)return true;
 	else if (x < 0 || x > 59) return true;
 	else if (GameBoard[x][y]->isVisible())return true;
 	else return false;
