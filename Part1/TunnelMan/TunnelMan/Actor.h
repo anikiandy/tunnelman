@@ -101,7 +101,7 @@ public:
 	int getSonar() { return sonars; }
 	void incWater() { waters++; }
 	int getWater() { return waters; }
-
+	void decHp() { hp--; }
 	void incGold() { golds++;  }
 	int getGold() { return golds; }
 	int getHp() { return hp *10; }
@@ -123,7 +123,7 @@ public:
 	bool pathIsClear(Direction dir);
 
 private:
-	int hp, restingTicks, ticks, spacesToMove;
+	int hp, restingTicks, ticks, spacesToMove, yellTicker;
 };
 
 

@@ -118,7 +118,8 @@ void StudentWorld::mergeTempParts()//merge anything in temp parts to parts list
 }
 bool StudentWorld::isEarth(int x, int y) // returns true if designated x,y coord is a piece of earth which is set to visible
 {
-	if (y > 59&& y < 64 && ( x > -1 ) && (x < 59)) return false;
+	if (y < 0) return true;
+	if (y > 59&& y < 64 && ( x > -1 ) && (x < 59) && y >= 0) return false;
 	if (y > 63)return true;
 	else if (x < 0 || x > 59) return true;
 	else if (GameBoard[x][y]->isVisible())return true;

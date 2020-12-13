@@ -152,6 +152,7 @@ Protester::Protester(StudentWorld * here):thing(TID_PROTESTER, here, 56 ,60, lef
 	hp = 5;
 	restingTicks = max<int>(0, 3 - here->getLevel() / 4);
 	ticks = restingTicks;
+	yellTicker = 0;
 	spacesToMove = (rand() % 60) + 8; 
 }
 void Protester::doSomething()
@@ -159,6 +160,19 @@ void Protester::doSomething()
 	if (!amAlive())return;
 	else if (ticks == 0) //resting ticks have passed 
 	{
+		//check for tunnelman
+		int playerX, playerY;
+		getWorld()->playerPosition(playerX, playerY);
+		if (yellTicker >= 5)
+		{
+			if (distanceFromMe(playerX, playerY) <= 3)
+			{
+				getWorld()->playSound(SOUND_PROTESTER_YELL);
+				getWorld()->hitPlayer();
+				yellTicker = 0;
+			}
+		}
+		else yellTicker++;
 		if (spacesToMove >= 0) //if we have not finished our random vector length
 		{
 			Direction dir = getDirection(); //figure out the direction model is facing

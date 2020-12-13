@@ -84,6 +84,7 @@ public:
 	void incGold() { player->incGold(); }
 	void incWater() { player->incWater(); }
 	void makeRocks(int b);
+	void hitPlayer() { player->decHp(); }
 	void addCollectibles(int IMID, int num, int option);
 	void addPart(std::shared_ptr<thing> part);
 	void mergeTempParts();
