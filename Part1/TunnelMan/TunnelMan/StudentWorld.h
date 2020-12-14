@@ -25,8 +25,8 @@ public:
 	
 	}
 
-	virtual int init();
-	virtual int move()
+	 int init();
+	 int move()
 	{
 		int G = getLevel() * 25 + 300; //random number
 		int match = rand() % G;
@@ -70,6 +70,7 @@ public:
 			}
 	
 			removeDead(parts);
+			
 			removeDeadCollectibles(goodies);
 			
 		}
@@ -87,7 +88,7 @@ public:
 	bool boulderClash(int x, int y);
 	bool isEarth(int x, int y);
 
-	virtual void cleanUp();
+	void cleanUp();
 	bool ClearEarth(int x, int y);
 	void incSonar() { player->incSonar(); }
 	void echo();
